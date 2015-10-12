@@ -64,7 +64,6 @@ public class Connection implements Runnable{
 
                     }
 
-                    System.out.println("next");
                     //voor debuggen
                     if(xmlStreamReader.hasName()){
                         System.out.println(xmlStreamReader.getName().toString());
@@ -100,11 +99,21 @@ public class Connection implements Runnable{
      */
     private Command readCommand(XMLStreamReader reader){
 
+        System.out.println("reading command");
+
+
+        System.out.println("Command = ");
+
         return null;
     }
 
     private Message readMessage(XMLStreamReader reader){
 
+
+        System.out.println("reading message");
+
+
+        System.out.println("Message = ");
         return null;
     }
 
