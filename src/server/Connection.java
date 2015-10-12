@@ -1,19 +1,13 @@
 package server;
 
-import com.sun.xml.internal.stream.writers.XMLEventWriterImpl;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
-import jdk.internal.util.xml.impl.XMLWriter;
+import model.protocol.Command;
+import model.protocol.Message;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
-import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -44,13 +38,48 @@ public class Connection implements Runnable{
 
 
 
-                    if(xmlStreamReader.hasText()){
-                        System.out.println(xmlStreamReader.getText());
+
+
+                    if(xmlStreamReader.isStartElement()){
+                        if(xmlStreamReader.hasName()){
+
+                            String name = xmlStreamReader.getName().toString();
+                            if(name.equals("iq")){
+                                System.out.println("RECIEVED A COMMAND");
+                                Command command = readCommand(xmlStreamReader);
+
+                                //TODO doe iets met het command
+                            }
+
+                            if(name.equals(Message.START_NAME)){
+                                System.out.println("RECIEVED A MESSAGE");
+                                Message message = readMessage(xmlStreamReader);
+
+                                //TODO doe iets met de message
+                            }
+
+                            xmlStreamReader.next();
+                            continue;
+                        }
+
                     }
+
+                    System.out.println("next");
+                    //voor debuggen
                     if(xmlStreamReader.hasName()){
-                        System.out.println(xmlStreamReader.getName());
+                        System.out.println(xmlStreamReader.getName().toString());
+                        xmlStreamReader.next();
+                    }else{
+                        xmlStreamReader.next();
                     }
-                    System.out.println(xmlStreamReader.next());
+
+
+
+
+
+
+
+
                 }
             } catch (XMLStreamException e) {
                 e.printStackTrace();
@@ -63,4 +92,21 @@ public class Connection implements Runnable{
 
 
     }
+
+    /**reads a command from the stream
+     *
+     * @param reader
+     * @return
+     */
+    private Command readCommand(XMLStreamReader reader){
+
+        return null;
+    }
+
+    private Message readMessage(XMLStreamReader reader){
+
+        return null;
+    }
+
+
 }

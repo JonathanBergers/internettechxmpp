@@ -4,6 +4,8 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import com.sun.xml.internal.stream.writers.XMLDOMWriterImpl;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
+import model.protocol.Message;
+import model.protocol.MessageType;
 import org.xml.sax.InputSource;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -40,11 +42,8 @@ public class TestClient {
             XMLStreamWriter writer = XMLStreamWriterFactory.create(socket.getOutputStream());
 
 
-            writer.writeStartElement("jonathan");
+            new Message("falco", "jonathan", "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
 
-
-
-            writer.writeEndElement();
 
             socket.close();
 
@@ -55,10 +54,7 @@ public class TestClient {
         } catch (IOException e) {
             System.out.println("Cannot connect to server");
             e.printStackTrace();
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
         }
-
 
     }
 
