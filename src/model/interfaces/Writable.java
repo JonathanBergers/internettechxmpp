@@ -1,5 +1,6 @@
-package model.protocol;
+package model.interfaces;
 
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
@@ -10,7 +11,7 @@ import javax.xml.stream.XMLStreamWriter;
 public interface Writable {
 
 
-    public void write(XMLStreamWriter writer);
+    public void write(XMLStreamWriter writer) throws XMLStreamException;
 
 
 }

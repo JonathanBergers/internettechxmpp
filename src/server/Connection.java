@@ -1,14 +1,19 @@
 package server;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import model.User;
+import model.interfaces.Writable;
 import model.protocol.Command;
 import model.protocol.Message;
+import model.protocol.MessageType;
+import model.protocol.Query;
 import org.xml.sax.InputSource;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by jonathan on 12-10-15.
@@ -19,6 +24,8 @@ public class Connection implements Runnable{
 
     private Socket socket;
 
+
+    private ArrayList<Writable> reads = new ArrayList<>(), writes = new ArrayList<>();
 
     public Connection(Socket socket) {
         this.socket = socket;
@@ -66,7 +73,7 @@ public class Connection implements Runnable{
 
                     //voor debuggen
                     if(xmlStreamReader.hasName()){
-                        System.out.println(xmlStreamReader.getName().toString());
+//                        System.out.println(xmlStreamReader.getName().toString());
                         xmlStreamReader.next();
                     }else{
                         xmlStreamReader.next();
@@ -93,6 +100,7 @@ public class Connection implements Runnable{
     }
 
     /**reads a command from the stream
+     * starting on the start element
      *
      * @param reader
      * @return
@@ -111,9 +119,62 @@ public class Connection implements Runnable{
 
 
         System.out.println("reading message");
+        User from, to;
+        String subject, body;
+        String typeString;
+
+        Message message = null;
+
+        try {
+            //start element
+
+            to = new User(reader.getAttributeValue(0));
+            from = new User(reader.getAttributeValue(1));
+            typeString = reader.getAttributeValue(2);
 
 
-        System.out.println("Message = ");
+            // attributes
+//            System.out.println("to: " + to.toString());
+//            System.out.println("from: " + from.toString());
+//            System.out.println("type: " + typeString);
+            reader.next();
+
+
+            //subject
+            subject = reader.getElementText();
+//            System.out.println("SUBJECT: " + subject);
+
+            reader.next();
+            body = reader.getElementText();
+//            System.out.println("body: "+ body);
+
+            message = new Message(to, from, subject, body, MessageType.getTypeFromString(typeString) );
+
+
+
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+
+
+
+        if(message ==null){
+            System.out.println("Message not read");
+            return null;
+        }
+        System.out.println("Message = " + message.toString());
+        return message;
+    }
+
+    private Query readQuery(XMLStreamReader reader){
+        System.out.println("reading query");
+
+
+
+        System.out.println("Query = ");
+
+
+
         return null;
     }
 

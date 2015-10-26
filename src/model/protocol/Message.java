@@ -1,6 +1,11 @@
 package model.protocol;
 
+import model.User;
+import model.interfaces.*;
+import model.interfaces.Readable;
+
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
@@ -26,12 +31,13 @@ public final class Message implements Writable{
 
     public static final String START_NAME = "message";
 
-    private final String to, from, subject, body;
+    private final String subject, body;
 
+    private final User from , to;
     private final MessageType type;
 
 
-    public Message(String to, String from, String subject, String body, MessageType type) {
+    public Message(User to, User from, String subject, String body, MessageType type) {
         this.to = to;
         this.from = from;
         this.subject = subject;
@@ -59,10 +65,10 @@ public final class Message implements Writable{
          */
 
         try {
-            writer.writeStartDocument();
+
             writer.writeStartElement(START_NAME);   //<message
-            writer.writeAttribute("to", to);        //<message to=""
-            writer.writeAttribute("from", from);
+            writer.writeAttribute("to", to.getEmail());        //<message to=""
+            writer.writeAttribute("from", from.getEmail());
             writer.writeAttribute("type", type.toString());
 
 
@@ -72,18 +78,29 @@ public final class Message implements Writable{
             writer.writeEndElement();
 
 
-            writer.writeStartElement("body");
+            writer.writeStartElement("body");       // <body> body </body>
             writer.writeCharacters(body);
             writer.writeEndElement();
 
 
             writer.writeEndElement();
-            writer.writeEndDocument();
+
 
 
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
+                ", from=" + from +
+                ", to=" + to +
+                ", type=" + type +
+                '}';
     }
 }
