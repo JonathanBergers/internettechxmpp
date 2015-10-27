@@ -5,9 +5,7 @@ import com.sun.xml.internal.stream.writers.XMLDOMWriterImpl;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import model.User;
-import model.protocol.Message;
-import model.protocol.MessageType;
-import model.protocol.StreamMessage;
+import model.protocol.*;
 import org.xml.sax.InputSource;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -22,7 +20,7 @@ import java.net.Socket;
 public class TestClient {
 
     private static final String HOST_NAME = "localhost";
-    private static final int HOST_PORT = 2000;
+    private static final int HOST_PORT = 12312;
 
     private User from  = new User("jonathan"), to = new User("falco");
 
@@ -34,6 +32,13 @@ public class TestClient {
 
     public void run(){
 
+
+
+
+        XMPPElement messageElement = new XMPPElement("message").addAttribute(new XMPPAttribute("to", "falco")).addAttribute(new XMPPAttribute("from", "Jonathan")).addAttribute(new XMPPAttribute("type", "chat"));
+        messageElement.addElement(new XMPPElement("subject", "joo")).addElement(new XMPPElement("body", "dit is de body"));
+
+        System.out.println(messageElement.toString());
 
         while(true) {
 
@@ -52,7 +57,8 @@ public class TestClient {
                 StreamMessage m = new StreamMessage(to, from);
                 try {
                     m.write(writer);
-                    new Message(to, from, "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
+                    //new Message(to, from, "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
+                    messageElement.write(writer);
 
                     m.write(writer);
                 } catch (XMLStreamException e) {

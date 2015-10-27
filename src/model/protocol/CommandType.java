@@ -6,6 +6,8 @@ package model.protocol;
 public enum CommandType {
 
     RESULT("result"),
+    GET("get"),
+    SET("set"),
     ERROR("error");
 
 

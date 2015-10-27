@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
  */
 public class Server {
 
-    private static final int PORT = 2000;
+    private static final int PORT = 12312;
     private static final String HOST = "localhost";
 
     ExecutorService executorService = Executors.newFixedThreadPool(10);

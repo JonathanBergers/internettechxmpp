@@ -8,6 +8,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 /**
  * Created by jonathan on 26-10-15.
+ * Met deze klasse kan een stream opgezet worden.
+ * Als de streammessage voor de tweede keer gewrite wordt dan sluit de stream.
  */
 public class StreamMessage implements Writable {
 
