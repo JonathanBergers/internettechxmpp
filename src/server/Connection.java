@@ -3,12 +3,10 @@ package server;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import model.User;
 import model.interfaces.Writable;
-import model.protocol.Command;
-import model.protocol.Message;
-import model.protocol.MessageType;
-import model.protocol.Query;
+import model.protocol.*;
 import org.xml.sax.InputSource;
 
+import javax.lang.model.element.Element;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
@@ -26,6 +24,7 @@ public class Connection implements Runnable{
 
 
     private ArrayList<Writable> reads = new ArrayList<>(), writes = new ArrayList<>();
+
 
     public Connection(Socket socket) {
         this.socket = socket;
@@ -47,46 +46,57 @@ public class Connection implements Runnable{
 
 
 
-                    if(xmlStreamReader.isStartElement()){
-                        if(xmlStreamReader.hasName()){
+                    if(xmlStreamReader.isStartElement()) {
 
-                            String name = xmlStreamReader.getName().toString();
-                            if(name.equals("iq")){
-                                System.out.println("RECIEVED A COMMAND");
-                                Command command = readCommand(xmlStreamReader);
 
-                                //TODO doe iets met het command
-                            }
+                        XMPPElement el =
+                        readElement(xmlStreamReader, new XMPPElement("ROOT"));
 
-                            if(name.equals(Message.START_NAME)){
-                                System.out.println("RECIEVED A MESSAGE");
-                                Message message = readMessage(xmlStreamReader);
+                        System.out.println(el.toString());
+                    }
 
-                                //TODO doe iets met de message
-                            }
+                    xmlStreamReader.next();
 
-                            xmlStreamReader.next();
-                            continue;
-                        }
+
+
+
+//                        if(xmlStreamReader.hasName()){
+//
+//                            String name = xmlStreamReader.getName().toString();
+//                            if(name.equals("iq")){
+//                                System.out.println("RECIEVED A COMMAND");
+//                                Command command = readCommand(xmlStreamReader);
+//
+//                                //TODO doe iets met het command
+//                            }
+//
+//                            if(name.equals(Message.START_NAME)){
+//                                System.out.println("RECIEVED A MESSAGE");
+//                                Message message = readMessage(xmlStreamReader);
+//
+//                                //TODO doe iets met de message
+//                            }
+//
+//                            xmlStreamReader.next();
+//                            continue;
+//                        }
+//
+//                    }
+//
+//                    //voor debuggen
+//                    if(xmlStreamReader.hasName()){
+////                        System.out.println(xmlStreamReader.getName().toString());
+//                        xmlStreamReader.next();
+//                    }else{
+//                        xmlStreamReader.next();
+//                    }
+//
+
 
                     }
 
-                    //voor debuggen
-                    if(xmlStreamReader.hasName()){
-//                        System.out.println(xmlStreamReader.getName().toString());
-                        xmlStreamReader.next();
-                    }else{
-                        xmlStreamReader.next();
-                    }
 
 
-
-
-
-
-
-
-                }
             } catch (XMLStreamException e) {
                 e.printStackTrace();
             }
@@ -98,6 +108,86 @@ public class Connection implements Runnable{
 
 
     }
+
+
+    private XMPPElement readElement(XMLStreamReader xmlStreamReader, XMPPElement parentElement){
+
+
+
+        try {
+
+            //start element
+            // get name
+            String name = xmlStreamReader.getLocalName();
+            System.out.println(name);
+
+            XMPPElement element = new XMPPElement(name);
+
+            // check of attributen
+            int attrCount = xmlStreamReader.getAttributeCount();
+
+            System.out.println(attrCount);
+
+            if (attrCount > 0) {
+
+                // voeg attributen toe
+                for (int i = 0; i < attrCount; i++) {
+
+                    String attrName = xmlStreamReader.getAttributeName(i).getLocalPart();
+                    String attrValue = xmlStreamReader.getAttributeValue(i);
+
+                    XMPPAttribute attribute = new XMPPAttribute(attrName, attrValue);
+//                    System.out.println("Attribute: " + attrName + " " + attrValue);
+//                    System.out.println(attribute.toString());
+
+                    element.addAttribute(attribute);
+
+
+                }
+            }
+
+            xmlStreamReader.next();
+
+            // kijk of het element text heeft
+            if (xmlStreamReader.hasText()) {
+
+                String text = xmlStreamReader.getText();
+                System.out.println("text: " + text);
+                element.setText(text);
+
+                // is het element klaar ? of bevat het meer elementen ?
+                xmlStreamReader.next();
+                if(xmlStreamReader.isEndElement()){
+                    // element is afgerond
+                    System.out.println("element is afgerond");
+                    parentElement.addElement(element);
+                    return element;
+                }else if(xmlStreamReader.isStartElement()){
+                    // element bevat meer elementen
+                    return readElement(xmlStreamReader, element);
+
+                }
+
+
+            } else if (xmlStreamReader.isStartElement()) {
+                return readElement(xmlStreamReader, element);
+            }
+
+        }catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+
+        return parentElement;
+
+            //xmlStreamReader.next();
+
+
+
+
+       // return null;
+
+    }
+
 
     /**reads a command from the stream
      * starting on the start element

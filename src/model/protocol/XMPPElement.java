@@ -4,9 +4,7 @@ import model.interfaces.Writable;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by jonathan on 27-10-15.
@@ -22,21 +20,21 @@ public class XMPPElement implements Writable{
     }
 
     private final String name;
-    private String value;
+    private String text;
 
     private LinkedList<XMPPElement> childElements = new LinkedList<>();
 
     private LinkedList<XMPPAttribute> attributes = new LinkedList<>();
 
 
-    public XMPPElement(String name, String value) {
+    public XMPPElement(String name, String text) {
         this.name = name;
-        this.value = value;
+        this.text = text;
     }
 
     public XMPPElement(String name) {
         this.name = name;
-        this.value = null;
+        this.text = null;
     }
 
     @Override
@@ -44,8 +42,8 @@ public class XMPPElement implements Writable{
 
 
         writer.writeStartElement(name);
-        if(value!= null){
-            writer.writeCharacters(value);
+        if(text != null){
+            writer.writeCharacters(text);
         }
 
         for(XMPPAttribute a: attributes) a.write(writer);
@@ -84,8 +82,8 @@ public class XMPPElement implements Writable{
 
         toString += ">";
 
-        if(value!= null){
-            toString += value;
+        if(text != null){
+            toString += text;
         }
 
         for(XMPPElement e: childElements){
@@ -96,5 +94,10 @@ public class XMPPElement implements Writable{
         return toString;
     }
 
+
+    public void setText(String text){
+
+        this.text = text;
+    }
 
 }
