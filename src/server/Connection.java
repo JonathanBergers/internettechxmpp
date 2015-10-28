@@ -44,56 +44,12 @@ public class Connection implements Runnable{
                 while(xmlStreamReader.hasNext()){
 
 
-
-
-
-
-                    if(xmlStreamReader.isStartElement()) {
-
-
-
                         XMPPElement el =
-                        readElement(xmlStreamReader, new XMPPElement(xmlStreamReader.getLocalName()));
+                        readStream(xmlStreamReader);
 
                         System.out.println(el.toString());
-                    }
+//
                     xmlStreamReader.next();
-//                    xmlStreamReader.next();
-//                    xmlStreamReader.next();
-
-
-
-//                        if(xmlStreamReader.hasName()){
-//
-//                            String name = xmlStreamReader.getName().toString();
-//                            if(name.equals("iq")){
-//                                System.out.println("RECIEVED A COMMAND");
-//                                Command command = readCommand(xmlStreamReader);
-//
-//                                //TODO doe iets met het command
-//                            }
-//
-//                            if(name.equals(Message.START_NAME)){
-//                                System.out.println("RECIEVED A MESSAGE");
-//                                Message message = readMessage(xmlStreamReader);
-//
-//                                //TODO doe iets met de message
-//                            }
-//
-//                            xmlStreamReader.next();
-//                            continue;
-//                        }
-//
-//                    }
-//
-//                    //voor debuggen
-//                    if(xmlStreamReader.hasName()){
-////                        System.out.println(xmlStreamReader.getName().toString());
-//                        xmlStreamReader.next();
-//                    }else{
-//                        xmlStreamReader.next();
-//                    }
-//
 
 
                     }
@@ -112,35 +68,62 @@ public class Connection implements Runnable{
 
     }
 
-    private Object recursie(Object o, XMLStreamReader xmlStreamReader){
-        //if(stream.next == opentag){
-        //o.add(recursie(new object, stream));
-        //} else if(stream.next == atribuut){
-        //o.add(new attribuut(stream);
-        //} else if(close tag){
-        // return o;
-        //}
-        return null;
+
+
+    private XMPPElement readStream(XMLStreamReader streamReader) throws XMLStreamException {
+
+        XMPPElement el = null;
+        try {
+            streamReader.next();
+            if (streamReader.isStartElement()) {
+
+                // recursion
+                el = new XMPPElement(streamReader.getLocalName());
+                el.addAttributes(checkAttributes(streamReader));
+                return readElement(streamReader, el);
+
+            }
+
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+        return el;
+
+
     }
 
-    private XMPPElement readElement(XMLStreamReader streamReader, XMPPElement element) {
 
-        while (true) {
+    /**
+     * Reads xml from the stream and builds elements
+     * recursive
+     * @param streamReader
+     * @param element
+     * @return
+     */
+    private XMPPElement readElement(XMLStreamReader streamReader, XMPPElement element) throws XMLStreamException {
+
+        while (streamReader.hasNext()) {
             try {
+
                 streamReader.next();
+
 
 
                 if (streamReader.isStartElement()) {
 
+
+
+                    // recursion
                     XMPPElement el = new XMPPElement(element, streamReader.getLocalName());
-//                    el = checkAttributes(streamReader, el);
+                    el.addAttributes(checkAttributes(streamReader));
                     element.addElement(readElement(streamReader, el));
+
                 } else if (streamReader.isCharacters()) {
                     element.setText(streamReader.getText());
                 } else {
                     return element;
                 }
-
+                //streamReader.next();
 
             } catch (XMLStreamException e) {
                 e.printStackTrace();
@@ -148,15 +131,20 @@ public class Connection implements Runnable{
 
         }
 
+        return element;
+
 
     }
 
 
 
 
-    private XMPPElement checkAttributes(XMLStreamReader reader, XMPPElement element){
 
 
+    private List<XMPPAttribute> checkAttributes(XMLStreamReader reader){
+
+
+        List<XMPPAttribute> attributes = new ArrayList<>();
         int attrCount = reader.getAttributeCount();
 
             System.out.println("Attribute count : "+ attrCount);
@@ -173,96 +161,17 @@ public class Connection implements Runnable{
                     System.out.println("Attribute: " + attrName + " " + attrValue);
                     System.out.println(attribute.toString());
 
-                    element.addAttribute(attribute);
+                    attributes.add(attribute);
+
 
 
                 }
 
             }
-        return element;
+        return attributes;
 
     }
 
-
-
-    /**reads a command from the stream
-     * starting on the start element
-     *
-     * @param reader
-     * @return
-     */
-    private Command readCommand(XMLStreamReader reader){
-
-        System.out.println("reading command");
-
-
-        System.out.println("Command = ");
-
-        return null;
-    }
-
-    private Message readMessage(XMLStreamReader reader){
-
-
-        System.out.println("reading message");
-        User from, to;
-        String subject, body;
-        String typeString;
-
-        Message message = null;
-
-        try {
-            //start element
-
-            to = new User(reader.getAttributeValue(0));
-            from = new User(reader.getAttributeValue(1));
-            typeString = reader.getAttributeValue(2);
-
-
-            // attributes
-//            System.out.println("to: " + to.toString());
-//            System.out.println("from: " + from.toString());
-//            System.out.println("type: " + typeString);
-            reader.next();
-
-
-            //subject
-            subject = reader.getElementText();
-//            System.out.println("SUBJECT: " + subject);
-
-            reader.next();
-            body = reader.getElementText();
-//            System.out.println("body: "+ body);
-
-            message = new Message(to, from, subject, body, MessageType.getTypeFromString(typeString) );
-
-
-
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
-
-
-
-        if(message ==null){
-            System.out.println("Message not read");
-            return null;
-        }
-        System.out.println("Message = " + message.toString());
-        return message;
-    }
-
-    private Query readQuery(XMLStreamReader reader){
-        System.out.println("reading query");
-
-
-
-        System.out.println("Query = ");
-
-
-
-        return null;
-    }
 
 
 }

@@ -5,6 +5,7 @@ import model.interfaces.Writable;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by jonathan on 27-10-15.
@@ -101,6 +102,10 @@ public class XMPPElement implements Writable{
         return element;
     }
 
+    public XMPPElement addAttributes(List<XMPPAttribute> attributes){
+        this.attributes.addAll(attributes);
+        return this;
+    }
 
 
     @Override
