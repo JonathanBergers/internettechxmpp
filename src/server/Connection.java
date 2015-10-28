@@ -12,6 +12,7 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jonathan on 12-10-15.
@@ -46,17 +47,19 @@ public class Connection implements Runnable{
 
 
 
+
                     if(xmlStreamReader.isStartElement()) {
 
 
+
                         XMPPElement el =
-                        readElement(xmlStreamReader, new XMPPElement("ROOT"));
+                        readElement(xmlStreamReader, new XMPPElement(xmlStreamReader.getLocalName()));
 
                         System.out.println(el.toString());
                     }
-
                     xmlStreamReader.next();
-
+//                    xmlStreamReader.next();
+//                    xmlStreamReader.next();
 
 
 
@@ -109,84 +112,77 @@ public class Connection implements Runnable{
 
     }
 
+    private Object recursie(Object o, XMLStreamReader xmlStreamReader){
+        //if(stream.next == opentag){
+        //o.add(recursie(new object, stream));
+        //} else if(stream.next == atribuut){
+        //o.add(new attribuut(stream);
+        //} else if(close tag){
+        // return o;
+        //}
+        return null;
+    }
 
-    private XMPPElement readElement(XMLStreamReader xmlStreamReader, XMPPElement parentElement){
+    private XMPPElement readElement(XMLStreamReader streamReader, XMPPElement element) {
+
+        while (true) {
+            try {
+                streamReader.next();
+
+
+                if (streamReader.isStartElement()) {
+
+                    XMPPElement el = new XMPPElement(element, streamReader.getLocalName());
+//                    el = checkAttributes(streamReader, el);
+                    element.addElement(readElement(streamReader, el));
+                } else if (streamReader.isCharacters()) {
+                    element.setText(streamReader.getText());
+                } else {
+                    return element;
+                }
+
+
+            } catch (XMLStreamException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
 
 
 
-        try {
 
-            //start element
-            // get name
-            String name = xmlStreamReader.getLocalName();
-            System.out.println(name);
+    private XMPPElement checkAttributes(XMLStreamReader reader, XMPPElement element){
 
-            XMPPElement element = new XMPPElement(name);
 
-            // check of attributen
-            int attrCount = xmlStreamReader.getAttributeCount();
+        int attrCount = reader.getAttributeCount();
 
-            System.out.println(attrCount);
+            System.out.println("Attribute count : "+ attrCount);
 
             if (attrCount > 0) {
 
                 // voeg attributen toe
                 for (int i = 0; i < attrCount; i++) {
 
-                    String attrName = xmlStreamReader.getAttributeName(i).getLocalPart();
-                    String attrValue = xmlStreamReader.getAttributeValue(i);
+                    String attrName = reader.getAttributeName(i).getLocalPart();
+                    String attrValue = reader.getAttributeValue(i);
 
                     XMPPAttribute attribute = new XMPPAttribute(attrName, attrValue);
-//                    System.out.println("Attribute: " + attrName + " " + attrValue);
-//                    System.out.println(attribute.toString());
+                    System.out.println("Attribute: " + attrName + " " + attrValue);
+                    System.out.println(attribute.toString());
 
                     element.addAttribute(attribute);
 
 
                 }
+
             }
-
-            xmlStreamReader.next();
-
-            // kijk of het element text heeft
-            if (xmlStreamReader.hasText()) {
-
-                String text = xmlStreamReader.getText();
-                System.out.println("text: " + text);
-                element.setText(text);
-
-                // is het element klaar ? of bevat het meer elementen ?
-                xmlStreamReader.next();
-                if(xmlStreamReader.isEndElement()){
-                    // element is afgerond
-                    System.out.println("element is afgerond");
-                    parentElement.addElement(element);
-                    return element;
-                }else if(xmlStreamReader.isStartElement()){
-                    // element bevat meer elementen
-                    return readElement(xmlStreamReader, element);
-
-                }
-
-
-            } else if (xmlStreamReader.isStartElement()) {
-                return readElement(xmlStreamReader, element);
-            }
-
-        }catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
-
-        return parentElement;
-
-            //xmlStreamReader.next();
-
-
-
-
-       // return null;
+        return element;
 
     }
+
 
 
     /**reads a command from the stream

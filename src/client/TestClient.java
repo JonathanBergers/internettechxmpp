@@ -33,12 +33,14 @@ public class TestClient {
     public void run(){
 
 
+        XMPPElement mE = new XMPPElement(null, "Message", "dit is een bericht");
+        mE.addAttribute(new XMPPAttribute("id", "100"));
+        mE.addElement("bodasy", "jooo");
+        mE.addElement("nogbody", "asd asd joo2").addElement("jo");
 
+        System.out.println(mE.toString());
 
-        XMPPElement messageElement = new XMPPElement("message").addAttribute(new XMPPAttribute("to", "falco")).addAttribute(new XMPPAttribute("from", "Jonathan")).addAttribute(new XMPPAttribute("type", "chat"));
-        messageElement.addElement(new XMPPElement("subject", "joo")).addElement(new XMPPElement("body", "dit is de body"));
-
-        System.out.println(messageElement.toString());
+        Message message = new Message(to, from, "subjeect", "body", MessageType.CHAT);
 
         while(true) {
 
@@ -56,11 +58,12 @@ public class TestClient {
 
                 StreamMessage m = new StreamMessage(to, from);
                 try {
-                    m.write(writer);
+                   // m.write(writer);
                     //new Message(to, from, "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
-                    messageElement.write(writer);
+                   mE.write(writer);
 
-                    m.write(writer);
+                    //message.write(writer);
+                   // m.write(writer);
                 } catch (XMLStreamException e) {
                     e.printStackTrace();
                 }
