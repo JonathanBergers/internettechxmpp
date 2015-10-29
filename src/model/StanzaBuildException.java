@@ -1,6 +1,6 @@
 package model;
 
-import model.protocol.XMPPObject;
+import model.xml.XMLObject;
 
 /**
  * Created by jonathan on 29-10-15.
@@ -8,22 +8,22 @@ import model.protocol.XMPPObject;
 public class StanzaBuildException extends Exception {
 
 
-    private final XMPPObject object;
+    private final XMLObject object;
 
 
-    public StanzaBuildException(String message, XMPPObject object) {
+    public StanzaBuildException(String message, XMLObject object) {
         super(message);
         this.object = object;
     }
 
-    public XMPPObject getObject() {
+    public XMLObject getObject() {
         return object;
     }
 
 
     public StanzaBuildException(String message) {
         super(message);
-        object = new XMPPObject() {
+        object = new XMLObject() {
             @Override
             public boolean hasName(String name) {
                 return false;

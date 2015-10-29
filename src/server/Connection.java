@@ -5,7 +5,8 @@ import model.StanzaBuildException;
 import model.StanzaFactory;
 import model.XMPPMessage;
 import model.interfaces.Writable;
-import model.protocol.*;
+import model.xml.XMLAttribute;
+import model.xml.XMLElement;
 import org.xml.sax.InputSource;
 
 import javax.xml.stream.XMLStreamException;
@@ -45,7 +46,7 @@ public class Connection implements Runnable{
                 while(xmlStreamReader.hasNext()){
 
 
-                        XMPPElement el =
+                        XMLElement el =
                         readStream(xmlStreamReader);
 
                         System.out.println(el.toString());
@@ -82,17 +83,17 @@ public class Connection implements Runnable{
 
 
 
-    private XMPPElement readStream(XMLStreamReader streamReader) throws XMLStreamException {
+    private XMLElement readStream(XMLStreamReader streamReader) throws XMLStreamException {
 
-        XMPPElement el = null;
+        XMLElement el = null;
         try {
             streamReader.next();
             if (streamReader.isStartElement()) {
 
                 // recursion
                 String localName = streamReader.getLocalName();
-//                el = new XMPPElement(streamReader.getLocalName());
-                el = new XMPPElement(localName);
+//                el = new XMLElement(streamReader.getLocalName());
+                el = new XMLElement(localName);
 
                 System.out.println("ELEMENT READ" + el.toString());
                 el.addAttributes(checkAttributes(streamReader));
@@ -116,7 +117,7 @@ public class Connection implements Runnable{
      * @param element
      * @return
      */
-    private XMPPElement readElement(XMLStreamReader streamReader, XMPPElement element) throws XMLStreamException {
+    private XMLElement readElement(XMLStreamReader streamReader, XMLElement element) throws XMLStreamException {
 
         while (streamReader.hasNext()) {
             try {
@@ -130,7 +131,7 @@ public class Connection implements Runnable{
 
 
                     // recursion
-                    XMPPElement el = new XMPPElement(element, streamReader.getLocalName());
+                    XMLElement el = new XMLElement(element, streamReader.getLocalName());
                     el.addAttributes(checkAttributes(streamReader));
                     element.addElement(readElement(streamReader, el));
 
@@ -157,10 +158,10 @@ public class Connection implements Runnable{
 
 
 
-    private List<XMPPAttribute> checkAttributes(XMLStreamReader reader){
+    private List<XMLAttribute> checkAttributes(XMLStreamReader reader){
 
 
-        List<XMPPAttribute> attributes = new ArrayList<>();
+        List<XMLAttribute> attributes = new ArrayList<>();
         int attrCount = reader.getAttributeCount();
 
             System.out.println("Attribute count : "+ attrCount);
@@ -173,7 +174,7 @@ public class Connection implements Runnable{
                     String attrName = reader.getAttributeName(i).getLocalPart();
                     String attrValue = reader.getAttributeValue(i);
 
-                    XMPPAttribute attribute = new XMPPAttribute(attrName, attrValue);
+                    XMLAttribute attribute = new XMLAttribute(attrName, attrValue);
                     System.out.println("Attribute: " + attrName + " " + attrValue);
                     System.out.println(attribute.toString());
 

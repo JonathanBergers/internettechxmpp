@@ -1,4 +1,4 @@
-package model.protocol;
+package model.xml;
 
 import model.interfaces.Writable;
 
@@ -8,11 +8,11 @@ import javax.xml.stream.XMLStreamWriter;
 /**
  * Created by jonathan on 27-10-15.
  */
-public class XMPPAttribute implements Writable , XMPPObject{
+public class XMLAttribute implements Writable , XMLObject {
 
     private final String name, value;
 
-    public XMPPAttribute(String name, String value) {
+    public XMLAttribute(String name, String value) {
         this.name = name;
         this.value = value;
     }

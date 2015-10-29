@@ -1,7 +1,7 @@
 package model;
 
-import model.protocol.XMPPElement;
-import model.protocol.XMPPObject;
+import model.xml.XMLElement;
+import model.xml.XMLObject;
 
 /**
  * Created by jonathan on 29-10-15.
@@ -9,13 +9,13 @@ import model.protocol.XMPPObject;
 public class StanzaFactory {
 
 
-    public static XMPPMessage buildMessage(XMPPElement element) throws StanzaBuildException {
-
-
-
-
-
-
+    /**Builds a message read from stream
+     *
+     * @param element
+     * @return
+     * @throws StanzaBuildException
+     */
+    public static XMPPMessage buildMessage(XMLElement element) throws StanzaBuildException {
         // start element is message
         assertHasName("message", element);
         assertIsStanza(element);
@@ -31,10 +31,20 @@ public class StanzaFactory {
 
     }
 
-    public static XMPPElement buildMessage(final String to, final String  from, final String type, final String id,
+    /**Builds a message to write to the stream
+     *
+     * @param to
+     * @param from
+     * @param type
+     * @param id
+     * @param subject
+     * @param body
+     * @return
+     */
+    public static XMLElement buildMessage(final String to, final String  from, final String type, final String id,
                                            final String subject, final String body){
 
-        XMPPElement element = createRootStanzaElement(to, from, type, id);
+        XMLElement element = createRootStanzaElement(to, from, type, id);
         element.addElement("subject", subject);
         element.addElement("body", body);
 
@@ -43,8 +53,8 @@ public class StanzaFactory {
 
     }
 
-    private static XMPPElement createRootStanzaElement(final String to, final String  from, final String type, final String id){
-        return new XMPPElement("message").addAttribute("to", to).addAttribute("from" , from).addAttribute("type", type).addAttribute("id", id);
+    private static XMLElement createRootStanzaElement(final String to, final String  from, final String type, final String id){
+        return new XMLElement("message").addAttribute("to", to).addAttribute("from" , from).addAttribute("type", type).addAttribute("id", id);
     }
 
 
@@ -62,7 +72,7 @@ public class StanzaFactory {
 
 
 
-    private static boolean assertHasName(String name, XMPPObject object) throws StanzaBuildException {
+    private static boolean assertHasName(String name, XMLObject object) throws StanzaBuildException {
 
         if(object== null){
             throw new StanzaBuildException("no object with name: " + name, object);
@@ -75,7 +85,7 @@ public class StanzaFactory {
     }
 
 
-    private static boolean assertHasNameAndValue(String name, XMPPObject object) throws StanzaBuildException {
+    private static boolean assertHasNameAndValue(String name, XMLObject object) throws StanzaBuildException {
 
         assertHasName(name, object);
         if(object.hasValue()){
@@ -94,7 +104,7 @@ public class StanzaFactory {
      * @return
      * @throws StanzaBuildException
      */
-    private static boolean assertIsStanza(XMPPElement element) throws StanzaBuildException{
+    private static boolean assertIsStanza(XMLElement element) throws StanzaBuildException{
 
 
 
@@ -108,7 +118,7 @@ public class StanzaFactory {
 
     }
 
-    private static boolean assertHasAmountChildren(int amount, XMPPElement object) throws StanzaBuildException {
+    private static boolean assertHasAmountChildren(int amount, XMLElement object) throws StanzaBuildException {
 
         if(object.hasAmountChildren(amount )){
             return true;

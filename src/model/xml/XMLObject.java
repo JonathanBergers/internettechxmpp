@@ -1,9 +1,9 @@
-package model.protocol;
+package model.xml;
 
 /**
  * Created by jonathan on 29-10-15.
  */
-public interface XMPPObject {
+public interface XMLObject {
 
 
     public boolean hasName(final String name);

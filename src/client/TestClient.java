@@ -3,7 +3,8 @@ package client;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import model.StanzaFactory;
 import model.User;
-import model.protocol.*;
+import model.xml.XMLAttribute;
+import model.xml.XMLElement;
 import old.Message;
 import old.MessageType;
 import old.StreamMessage;
@@ -32,8 +33,8 @@ public class TestClient {
     public void run(){
 
 
-        XMPPElement mE = new XMPPElement(null, "StanzaMessage", "dit is een bericht");
-        mE.addAttribute(new XMPPAttribute("id", "100"));
+        XMLElement mE = new XMLElement(null, "StanzaMessage", "dit is een bericht");
+        mE.addAttribute(new XMLAttribute("id", "100"));
         mE.addElement("bodasy", "jooo");
         mE.addElement("nogbody", "asd asd joo2").addElement("jo");
 

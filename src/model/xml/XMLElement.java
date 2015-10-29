@@ -1,4 +1,4 @@
-package model.protocol;
+package model.xml;
 
 import model.interfaces.Writable;
 
@@ -10,45 +10,45 @@ import java.util.List;
 /**
  * Created by jonathan on 27-10-15.
  */
-public class XMPPElement implements Writable, XMPPObject{
+public class XMLElement implements Writable, XMLObject {
 
 
 
     public static void main(String[] args) {
 
-        XMPPElement e = new XMPPElement(null, "StanzaMessage", "dit is een bericht");
-        e.addAttribute(new XMPPAttribute("id", "100"));
+        XMLElement e = new XMLElement(null, "StanzaMessage", "dit is een bericht");
+        e.addAttribute(new XMLAttribute("id", "100"));
         e.addElement("body", "jooo");
         System.out.println(e.toString());
 
     }
 
-    private XMPPElement parent;
+    private XMLElement parent;
     private final String name;
     private String text;
 
-    private LinkedList<XMPPElement> childElements = new LinkedList<>();
+    private LinkedList<XMLElement> childElements = new LinkedList<>();
 
-    private LinkedList<XMPPAttribute> attributes = new LinkedList<>();
+    private LinkedList<XMLAttribute> attributes = new LinkedList<>();
 
 
-    public XMPPElement(XMPPElement parent, String name) {
+    public XMLElement(XMLElement parent, String name) {
         this.parent = parent;
         this.name = name;
         this.text = null;
     }
-    public XMPPElement(XMPPElement parent, String name, String text) {
+    public XMLElement(XMLElement parent, String name, String text) {
         this.parent = parent;
         this.name = name;
         this.text = text;
     }
 
-    public XMPPElement(String name, String text) {
+    public XMLElement(String name, String text) {
         this.parent = null;
         this.name = name;
         this.text = text;
     }
-    public XMPPElement(String name) {
+    public XMLElement(String name) {
         this.parent = null;
         this.name = name;
         this.text = null;
@@ -64,12 +64,12 @@ public class XMPPElement implements Writable, XMPPObject{
         writer.writeStartElement(name);
 
 
-        for(XMPPAttribute a: attributes) a.write(writer);
+        for(XMLAttribute a: attributes) a.write(writer);
         if(text != null){
             writer.writeCharacters(text);
         }
 
-        for(XMPPElement e: childElements){
+        for(XMLElement e: childElements){
 
             e.write(writer);
 
@@ -80,33 +80,33 @@ public class XMPPElement implements Writable, XMPPObject{
 
     }
 
-    public XMPPElement addElement(final String name, final String text){
-        XMPPElement element = new XMPPElement(this, name, text);
+    public XMLElement addElement(final String name, final String text){
+        XMLElement element = new XMLElement(this, name, text);
         childElements.addLast(element);
         return element;
     }
-    public XMPPElement addElement(final String name){
-        XMPPElement element = new XMPPElement(this, name);
+    public XMLElement addElement(final String name){
+        XMLElement element = new XMLElement(this, name);
         childElements.addLast(element);
         return element;
     }
 
-    public XMPPElement addAttribute(XMPPAttribute attribute){
+    public XMLElement addAttribute(XMLAttribute attribute){
         attributes.addLast(attribute);
         return this;
     }
-    public XMPPElement addAttribute(String name, String value){
-        attributes.addLast(new XMPPAttribute(name, value));
+    public XMLElement addAttribute(String name, String value){
+        attributes.addLast(new XMLAttribute(name, value));
         return this;
     }
 
-    public XMPPElement addElement(XMPPElement element){
+    public XMLElement addElement(XMLElement element){
         element.setParent(this);
         childElements.addLast(element);
         return element;
     }
 
-    public XMPPElement addAttributes(List<XMPPAttribute> attributes){
+    public XMLElement addAttributes(List<XMLAttribute> attributes){
         this.attributes.addAll(attributes);
         return this;
     }
@@ -117,7 +117,7 @@ public class XMPPElement implements Writable, XMPPObject{
 
         String toString  = "<" + name;
 
-        for(XMPPAttribute a: attributes){
+        for(XMLAttribute a: attributes){
             toString += " "+  a.toString();
         }
 
@@ -127,7 +127,7 @@ public class XMPPElement implements Writable, XMPPObject{
             toString += text;
         }
 
-        for(XMPPElement e: childElements){
+        for(XMLElement e: childElements){
             toString += "\n" + "\t" +  e.toString() + "\n";
         }
 
@@ -145,7 +145,7 @@ public class XMPPElement implements Writable, XMPPObject{
         }
         String toString  = space + "<" + name;
 
-        for(XMPPAttribute a: attributes){
+        for(XMLAttribute a: attributes){
             toString += " "+  a.toString();
         }
 
@@ -158,7 +158,7 @@ public class XMPPElement implements Writable, XMPPObject{
             toString += "</" + name + ">";
             return toString;
         }
-        for(XMPPElement e: childElements){
+        for(XMLElement e: childElements){
             toString += "\n" + e.createToString(toString, tabs + 1) + "\n";
         }
 
@@ -170,7 +170,7 @@ public class XMPPElement implements Writable, XMPPObject{
 
 
 
-    public void setParent(XMPPElement parent) {
+    public void setParent(XMLElement parent) {
         this.parent = parent;
     }
 
@@ -183,13 +183,13 @@ public class XMPPElement implements Writable, XMPPObject{
     }
 
 
-    public XMPPElement getElementAt(int index){
+    public XMLElement getElementAt(int index){
 
         return childElements.get(index);
 
     }
 
-    public XMPPAttribute getAttributeAt(int index){
+    public XMLAttribute getAttributeAt(int index){
 
 
         return attributes.get(index);
