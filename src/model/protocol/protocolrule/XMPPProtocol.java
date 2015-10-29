@@ -1,12 +1,15 @@
 package model.protocol.protocolrule;
 
+import java.util.List;
+
 /**
  * Created by jonathan on 29-10-15.
  */
-public interface Protocol<T> {
+public class XMPPProtocol{
 
 
-    public boolean conforms(T subject);
+    private List<Protocol> protocols;
+
 
 
 

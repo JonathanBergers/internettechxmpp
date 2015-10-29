@@ -1,6 +1,10 @@
 package model.xml;
 
 import model.interfaces.Writable;
+import model.protocol.protocolrule.HasProtocol;
+import model.protocol.protocolrule.NestedProtocol;
+import model.protocol.protocolrule.NestedProtocolInterface;
+import model.protocol.protocolrule.Protocol;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -10,7 +14,7 @@ import java.util.List;
 /**
  * Created by jonathan on 27-10-15.
  */
-public class XMLElement implements Writable, XMLObject {
+public class XMLElement implements Writable, XMLObject, NestedProtocol<NestedProtocolInterface<XMLElement> {
 
 
 
@@ -227,4 +231,45 @@ public class XMLElement implements Writable, XMLObject {
     public String getText() {
         return text;
     }
+
+
+    public boolean conforms(NestedProtocol<XMLElement> subject) {
+
+        if(!subject.conforms(this)){
+            return false;
+
+        }
+        return conformsRec(subject, true);
+
+    }
+
+
+    public boolean conformsRec(NestedProtocol<XMLElement> subject, boolean currentValue) {
+
+        if(!currentValue){
+            return false;
+        }
+        boolean conforms = false;
+        if(subject.isLeaf()) {
+            return conforms = subject.conforms(this);
+        }else {
+            for (int i = 0; i < childElements.size(); i++) {
+                NestedProtocolInterface subjectChild = subject.getChildAt(i);
+                XMLElement childElement = childElements.get(i);
+
+                if(subjectChild == null || childElement == null){
+                    return false;
+                }
+                conforms = subjectChild.conformsRec(childElement, conforms);
+                if(!conforms){
+                    return false;
+                }
+
+            }
+        }
+        return conforms;
+    }
+
+
+
 }

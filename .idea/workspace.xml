@@ -2,19 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c88a844-d7c5-4d70-a867-52ba1921e349" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolRule.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/XMPPObject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/XMPPQuery.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/protocol/XMPPAttribute.java" afterPath="$PROJECT_DIR$/src/model/xml/XMLAttribute.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/protocol/XMPPElement.java" afterPath="$PROJECT_DIR$/src/model/xml/XMLElement.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/protocol/XMPPObject.java" afterPath="$PROJECT_DIR$/src/model/xml/XMLObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/Connection.java" afterPath="$PROJECT_DIR$/src/server/Connection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/protocol/Stanza.java" afterPath="$PROJECT_DIR$/src/model/protocol/Stanza.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/StanzaBuildException.java" afterPath="$PROJECT_DIR$/src/model/StanzaBuildException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/StanzaFactory.java" afterPath="$PROJECT_DIR$/src/model/StanzaFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/protocol/StanzaType.java" afterPath="$PROJECT_DIR$/src/model/protocol/StanzaType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/TestClient.java" afterPath="$PROJECT_DIR$/src/client/TestClient.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/HasProtocol.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/MessageProtocol.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocol.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocolInterface.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolBuilder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/SamzaProtocol.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/XMLProtocol.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/XMPPProtocol.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolRule.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java" afterPath="$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/xml/XMLElement.java" afterPath="$PROJECT_DIR$/src/model/xml/XMLElement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/XMPPMessage.java" afterPath="$PROJECT_DIR$/src/model/XMPPMessage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -39,86 +37,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="XMPPMessage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/XMPPMessage.java">
+      <file leaf-file-name="NestedProtocol.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocol.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
+              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#250#251#0" expanded="true" />
-                <element signature="e#287#288#0" expanded="true" />
-                <element signature="e#332#333#0" expanded="true" />
-                <element signature="e#395#396#0" expanded="true" />
-                <element signature="e#437#438#0" expanded="true" />
-                <element signature="e#500#501#0" expanded="true" />
+                <element signature="e#436#437#0" expanded="true" />
+                <element signature="e#488#489#0" expanded="true" />
+                <element signature="e#565#566#0" expanded="true" />
+                <element signature="e#614#615#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XMPPObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/XMPPObject.java">
+      <file leaf-file-name="NestedProtocolInterface.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocolInterface.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#273#274#0" expanded="true" />
-                <element signature="e#325#326#0" expanded="true" />
-                <element signature="e#365#366#0" expanded="true" />
-                <element signature="e#431#432#0" expanded="true" />
-                <element signature="e#743#744#0" expanded="true" />
-                <element signature="e#809#810#0" expanded="true" />
-                <element signature="e#856#857#0" expanded="true" />
-                <element signature="e#904#905#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StanzaMessage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/protocol/StanzaMessage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XMLElement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/xml/XMLElement.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="222" column="49" selection-start-line="222" selection-start-column="49" selection-end-line="222" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4897#4898#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StanzaFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/StanzaFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProtocolRule.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolRule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19354838">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -128,41 +67,113 @@
         <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StanzaBuildException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/StanzaBuildException.java">
+      <file leaf-file-name="XMLElement.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/model/xml/XMLElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XMPPQuery.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/XMPPQuery.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.53118277">
+              <caret line="246" column="51" selection-start-line="246" selection-start-column="51" selection-end-line="246" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#213#214#0" expanded="true" />
-                <element signature="e#250#251#0" expanded="true" />
+                <element signature="e#4224#4225#0" expanded="true" />
+                <element signature="e#4260#4261#0" expanded="true" />
+                <element signature="e#4308#4309#0" expanded="true" />
+                <element signature="e#4353#4354#0" expanded="true" />
+                <element signature="e#4393#4394#0" expanded="true" />
+                <element signature="e#4425#4426#0" expanded="true" />
+                <element signature="e#5100#5101#0" expanded="true" />
+                <element signature="e#5153#5154#0" expanded="true" />
+                <element signature="e#5184#5185#0" expanded="true" />
+                <element signature="e#5211#5212#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XMLObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/xml/XMLObject.java">
+      <file leaf-file-name="HasProtocol.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/HasProtocol.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/old/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageProtocol.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/MessageProtocol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#565#566#0" expanded="true" />
+                <element signature="e#625#626#0" expanded="true" />
+                <element signature="e#712#713#0" expanded="true" />
+                <element signature="e#749#750#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XMLProtocol.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/XMLProtocol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#394#395#0" expanded="true" />
+                <element signature="e#443#444#0" expanded="true" />
+                <element signature="e#507#508#0" expanded="true" />
+                <element signature="e#544#545#0" expanded="true" />
+                <element signature="e#611#612#0" expanded="true" />
+                <element signature="e#639#640#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XMPPMessage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/XMPPMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="68" selection-start-line="11" selection-start-column="68" selection-end-line="11" selection-end-column="68" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#390#391#0" expanded="true" />
+                <element signature="e#427#428#0" expanded="true" />
+                <element signature="e#472#473#0" expanded="true" />
+                <element signature="e#535#536#0" expanded="true" />
+                <element signature="e#577#578#0" expanded="true" />
+                <element signature="e#640#641#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProtocolBuilder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -190,17 +201,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/model/protocol/Query.java" />
-        <option value="$PROJECT_DIR$/src/util/Writable.java" />
-        <option value="$PROJECT_DIR$/src/model/protocol/Writable.java" />
-        <option value="$PROJECT_DIR$/src/model/protocol/CommandError.java" />
-        <option value="$PROJECT_DIR$/src/model/protocol/CommandResult.java" />
-        <option value="$PROJECT_DIR$/src/model/Stream.java" />
-        <option value="$PROJECT_DIR$/src/model/interfaces/Readable.java" />
-        <option value="$PROJECT_DIR$/src/model/interfaces/Stream.java" />
-        <option value="$PROJECT_DIR$/src/server/StreamImpl.java" />
-        <option value="$PROJECT_DIR$/src/server/StreamConverter.java" />
-        <option value="$PROJECT_DIR$/src/model/ReadException.java" />
         <option value="$PROJECT_DIR$/src/server/Stream.java" />
         <option value="$PROJECT_DIR$/src/model/RegisteredUser.java" />
         <option value="$PROJECT_DIR$/src/model/User.java" />
@@ -234,13 +234,24 @@
         <option value="$PROJECT_DIR$/src/model/protocol/StanzaType.java" />
         <option value="$PROJECT_DIR$/src/model/protocol/StanzaQuery.java" />
         <option value="$PROJECT_DIR$/src/model/protocol/XMLElement.java" />
-        <option value="$PROJECT_DIR$/src/model/XMPPMessage.java" />
         <option value="$PROJECT_DIR$/src/model/XMPPObject.java" />
         <option value="$PROJECT_DIR$/src/model/XMPPQuery.java" />
         <option value="$PROJECT_DIR$/src/model/protocol/Protocol.java" />
-        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java" />
         <option value="$PROJECT_DIR$/src/model/protocol/ProtocolRule.java" />
         <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolRule.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/NameRule.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/NameProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/XMPPProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/SamzaProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolBuilder.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/HasProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/XMPPMessage.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/MessageProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/XMLProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocol.java" />
+        <option value="$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocolInterface.java" />
+        <option value="$PROJECT_DIR$/src/model/xml/XMLElement.java" />
       </list>
     </option>
   </component>
@@ -357,6 +368,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebtechXMPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebtechXMPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1034,7 +1067,7 @@
       <workItem from="1446031761520" duration="6243000" />
       <workItem from="1446039288813" duration="2823000" />
       <workItem from="1446043744574" duration="3690000" />
-      <workItem from="1446106535266" duration="7476000" />
+      <workItem from="1446106535266" duration="12831000" />
     </task>
     <task id="LOCAL-00001" summary="messages can be written">
       <created>1444665554569</created>
@@ -1078,11 +1111,17 @@
       <option name="project" value="LOCAL" />
       <updated>1446111759035</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="implementing generic protocols&#10;">
+      <created>1446114024590</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1446114024590</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49875000" />
+    <option name="totallyTimeSpent" value="55230000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="59" y="24" width="1861" height="1056" extended-state="6" />
@@ -1132,7 +1171,8 @@
     <MESSAGE value="generic reader" />
     <MESSAGE value="generic reader done" />
     <MESSAGE value="reading objects working" />
-    <option name="LAST_COMMIT_MESSAGE" value="reading objects working" />
+    <MESSAGE value="implementing generic protocols&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementing generic protocols&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1143,55 +1183,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/Programs/jdk1.8.0_60/src.zip!/javax/xml/stream/XMLStreamWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="198" column="40" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/protocol/StanzaCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/old/CommandResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/old/CommandError.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/interfaces/Writable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="84" selection-start-line="6" selection-start-column="84" selection-end-line="6" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/old/Query.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1400,16 +1391,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/old/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="78" column="42" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/RegisteredUser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1496,33 +1477,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/xml/XMLElement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="222" column="49" selection-start-line="222" selection-start-column="49" selection-end-line="222" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4897#4898#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/XMPPMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#250#251#0" expanded="true" />
-            <element signature="e#287#288#0" expanded="true" />
-            <element signature="e#332#333#0" expanded="true" />
-            <element signature="e#395#396#0" expanded="true" />
-            <element signature="e#437#438#0" expanded="true" />
-            <element signature="e#500#501#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/XMPPQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1540,16 +1494,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/StanzaFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1571,19 +1515,153 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java">
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/XMPPProtocol.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolRule.java">
+    <entry file="file://$PROJECT_DIR$/src/model/StanzaFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19354838">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/SamzaProtocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/old/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/HasProtocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/XMPPMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="68" selection-start-line="11" selection-start-column="68" selection-end-line="11" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#390#391#0" expanded="true" />
+            <element signature="e#427#428#0" expanded="true" />
+            <element signature="e#472#473#0" expanded="true" />
+            <element signature="e#535#536#0" expanded="true" />
+            <element signature="e#577#578#0" expanded="true" />
+            <element signature="e#640#641#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/XMLProtocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#394#395#0" expanded="true" />
+            <element signature="e#443#444#0" expanded="true" />
+            <element signature="e#507#508#0" expanded="true" />
+            <element signature="e#544#545#0" expanded="true" />
+            <element signature="e#611#612#0" expanded="true" />
+            <element signature="e#639#640#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/Protocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/ProtocolBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/MessageProtocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#565#566#0" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#712#713#0" expanded="true" />
+            <element signature="e#749#750#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="73" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#436#437#0" expanded="true" />
+            <element signature="e#488#489#0" expanded="true" />
+            <element signature="e#565#566#0" expanded="true" />
+            <element signature="e#614#615#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/protocol/protocolrule/NestedProtocolInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/xml/XMLElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53118277">
+          <caret line="246" column="51" selection-start-line="246" selection-start-column="51" selection-end-line="246" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4224#4225#0" expanded="true" />
+            <element signature="e#4260#4261#0" expanded="true" />
+            <element signature="e#4308#4309#0" expanded="true" />
+            <element signature="e#4353#4354#0" expanded="true" />
+            <element signature="e#4393#4394#0" expanded="true" />
+            <element signature="e#4425#4426#0" expanded="true" />
+            <element signature="e#5100#5101#0" expanded="true" />
+            <element signature="e#5153#5154#0" expanded="true" />
+            <element signature="e#5184#5185#0" expanded="true" />
+            <element signature="e#5211#5212#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

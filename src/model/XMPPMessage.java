@@ -1,12 +1,15 @@
 package model;
 
 import model.protocol.StanzaMessage;
+import model.protocol.protocolrule.HasProtocol;
+import model.protocol.protocolrule.Protocol;
+import model.protocol.protocolrule.XMLProtocol;
 import model.xml.XMLElement;
 
 /**
  * Created by jonathan on 29-10-15.
  */
-public class XMPPMessage extends XMPPObject implements StanzaMessage {
+public class XMPPMessage extends XMPPObject implements StanzaMessage{
 
 
     public XMPPMessage(XMLElement wrappedElement) {
@@ -22,6 +25,7 @@ public class XMPPMessage extends XMPPObject implements StanzaMessage {
     public String body() {
         return wrappedElement.getElementAt(1).getText();
     }
+
 
 
 }
