@@ -1,4 +1,4 @@
-package model.protocol;
+package old;
 
 /**
  * Created by jonathan on 12-10-15.
@@ -36,4 +36,30 @@ public enum MessageType {
         return null;
 
     }
+
+//
+//    public static final String RESULT = "result";
+//    public static final String GET = "get";
+//    public static final String SET = "set";
+//
+////    RESULT("result"),
+////    GET("get"),
+////    SET("set"),
+////    ERROR("error");
+//
+//
+////    private final String asString;
+////
+////    CommandType(final String asString) {
+////        this.asString = asString;
+////    }
+////
+////
+////    @Override
+////    public String toString() {
+////        return asString;
+////    }
+
+
+
 }

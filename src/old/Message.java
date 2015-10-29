@@ -1,17 +1,15 @@
-package model.protocol;
+package old;
 
 import model.User;
 import model.interfaces.*;
-import model.interfaces.Readable;
 
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
  * Created by jonathan on 12-10-15.
  *
- * XMPP Message volgens protocol
+ * XMPP StanzaMessage volgens protocol
  *
  *
  * Ok, here is the explaination;
@@ -95,7 +93,7 @@ public final class Message implements Writable{
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "StanzaMessage{" +
                 "subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
                 ", from=" + from +

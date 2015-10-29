@@ -1,14 +1,13 @@
 package client;
 
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-import com.sun.xml.internal.stream.writers.XMLDOMWriterImpl;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
+import model.StanzaFactory;
 import model.User;
 import model.protocol.*;
-import org.xml.sax.InputSource;
+import old.Message;
+import old.MessageType;
+import old.StreamMessage;
 
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class TestClient {
     public void run(){
 
 
-        XMPPElement mE = new XMPPElement(null, "Message", "dit is een bericht");
+        XMPPElement mE = new XMPPElement(null, "StanzaMessage", "dit is een bericht");
         mE.addAttribute(new XMPPAttribute("id", "100"));
         mE.addElement("bodasy", "jooo");
         mE.addElement("nogbody", "asd asd joo2").addElement("jo");
@@ -59,8 +58,8 @@ public class TestClient {
                 StreamMessage m = new StreamMessage(to, from);
                 try {
                    // m.write(writer);
-                    //new Message(to, from, "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
-                   mE.write(writer);
+                    //new StanzaMessage(to, from, "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
+                    StanzaFactory.buildMessage("falco", "jonathan", "chat", "mess", "dit is het onderwerp", "dit is de bdody").write(writer);
 
                     //message.write(writer);
                    // m.write(writer);

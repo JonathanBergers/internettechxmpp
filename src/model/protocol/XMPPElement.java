@@ -10,13 +10,13 @@ import java.util.List;
 /**
  * Created by jonathan on 27-10-15.
  */
-public class XMPPElement implements Writable{
+public class XMPPElement implements Writable, XMPPObject{
 
 
 
     public static void main(String[] args) {
 
-        XMPPElement e = new XMPPElement(null, "Message", "dit is een bericht");
+        XMPPElement e = new XMPPElement(null, "StanzaMessage", "dit is een bericht");
         e.addAttribute(new XMPPAttribute("id", "100"));
         e.addElement("body", "jooo");
         System.out.println(e.toString());
@@ -95,6 +95,10 @@ public class XMPPElement implements Writable{
         attributes.addLast(attribute);
         return this;
     }
+    public XMPPElement addAttribute(String name, String value){
+        attributes.addLast(new XMPPAttribute(name, value));
+        return this;
+    }
 
     public XMPPElement addElement(XMPPElement element){
         element.setParent(this);
@@ -155,7 +159,7 @@ public class XMPPElement implements Writable{
             return toString;
         }
         for(XMPPElement e: childElements){
-            toString += "\n" + e.createToString(toString, tabs+1) + "\n";
+            toString += "\n" + e.createToString(toString, tabs + 1) + "\n";
         }
 
         toString += space + "</" + name + ">";
@@ -170,7 +174,57 @@ public class XMPPElement implements Writable{
         this.parent = parent;
     }
 
+    public boolean hasName(final String name){
+        return this.name.equals(name);
+    }
+
     public void setText(String text) {
         this.text = text;
+    }
+
+
+    public XMPPElement getElementAt(int index){
+
+        return childElements.get(index);
+
+    }
+
+    public XMPPAttribute getAttributeAt(int index){
+
+
+        return attributes.get(index);
+    }
+
+    @Override
+    public String getDisplayMessage() {
+
+        String display = "Element: name: " + name;
+        if(text == null){
+            return display + "without text";
+        }
+        return display+" , text: "+ text;
+    }
+
+    @Override
+    public boolean hasValue() {
+
+        if(text != null){
+
+            if(!text.isEmpty()){
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
+    public boolean hasAmountChildren(int amount){
+        return childElements.size() == amount;
+    }
+
+    public String getText() {
+        return text;
     }
 }

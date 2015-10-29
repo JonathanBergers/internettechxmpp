@@ -1,12 +1,13 @@
 package server;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
-import model.User;
+import model.StanzaBuildException;
+import model.StanzaFactory;
+import model.XMPPMessage;
 import model.interfaces.Writable;
 import model.protocol.*;
 import org.xml.sax.InputSource;
 
-import javax.lang.model.element.Element;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
@@ -48,6 +49,17 @@ public class Connection implements Runnable{
                         readStream(xmlStreamReader);
 
                         System.out.println(el.toString());
+
+                    try {
+                        XMPPMessage message = StanzaFactory.buildMessage(el);
+                        System.out.println("RECIEVED MESSAGE : "+ message.toString());
+
+
+                    } catch (StanzaBuildException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("WELL");
+
 //
                     xmlStreamReader.next();
 
@@ -78,7 +90,11 @@ public class Connection implements Runnable{
             if (streamReader.isStartElement()) {
 
                 // recursion
-                el = new XMPPElement(streamReader.getLocalName());
+                String localName = streamReader.getLocalName();
+//                el = new XMPPElement(streamReader.getLocalName());
+                el = new XMPPElement(localName);
+
+                System.out.println("ELEMENT READ" + el.toString());
                 el.addAttributes(checkAttributes(streamReader));
                 return readElement(streamReader, el);
 
