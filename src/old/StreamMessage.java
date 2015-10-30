@@ -1,7 +1,7 @@
 package old;
 
 import model.User;
-import model.interfaces.Writable;
+import interfaces.Writable;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;

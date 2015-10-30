@@ -18,10 +18,22 @@ import java.util.concurrent.Executors;
  */
 public class Server {
 
-    private static final int PORT = 12312;
-    private static final String HOST = "localhost";
+    private final String hostName;
+    private final int port;
 
-    ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private ThreadPool threadPool;
+
+    public Server(String hostName, int port) {
+        this.hostName = hostName;
+        this.port = port;
+    }
+
+    public Server(){
+        this.hostName = "localhost";
+        this.port = 8080;
+    }
+
+
 
     // run the server
     public static void main(String[] args) {
@@ -33,23 +45,18 @@ public class Server {
     public void run(){
 
 
+        threadPool = new ThreadPool();
 
 
         try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
+            ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("server socket initialized");
 
             // wait for connection then add thread
             while(true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Client socket accepted");
-                executorService.submit(new Connection(socket));
-
-
-
-
-
-
+                threadPool.addConnection(new Connection(socket));
 
 
 

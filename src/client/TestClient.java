@@ -1,76 +1,66 @@
 package client;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
-import model.StanzaFactory;
+import generic.xml.XMLAttribute;
+import generic.xml.XMLElement;
+import interfaces.Writable;
 import model.User;
-import model.xml.XMLAttribute;
-import model.xml.XMLElement;
-import old.Message;
-import old.MessageType;
 import old.StreamMessage;
+import xmpp.StanzaFactory;
 
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 import java.net.Socket;
 
 /**
- * Created by jonathan on 12-10-15.
+ * Created by jonathan on 30-10-15.
  */
 public class TestClient {
 
-    private static final String HOST_NAME = "localhost";
-    private static final int HOST_PORT = 12312;
+    private final String hostName;
+    private final int port;
+    private final User u;
+    private Socket socket;
 
-    private User from  = new User("jonathan"), to = new User("falco");
 
-    public static void main(String[] args) {
-        new TestClient().run();
+    XMLStreamReader xmlStreamReader;
+    XMLStreamWriter xmlStreamWriter;
+
+    public TestClient(String hostName, int port, User u) {
+        this.hostName = hostName;
+        this.port = port;
+        this.u = u;
     }
 
+    public TestClient(){
+
+        this.hostName = "localhost";
+        this.port = 8080;
+        this.u = new User("default@user.com");
+    }
+    public TestClient(User u){
+
+        this.hostName = "localhost";
+        this.port = 8080;
+        this.u = u;
+    }
 
 
     public void run(){
 
-
-        XMLElement mE = new XMLElement(null, "StanzaMessage", "dit is een bericht");
-        mE.addAttribute(new XMLAttribute("id", "100"));
-        mE.addElement("bodasy", "jooo");
-        mE.addElement("nogbody", "asd asd joo2").addElement("jo");
-
-        System.out.println(mE.toString());
-
-        Message message = new Message(to, from, "subjeect", "body", MessageType.CHAT);
-
-        while(true) {
-
-
             try {
 
                 // connect to server
-                Socket socket = new Socket(HOST_NAME, HOST_PORT);
+              socket = new Socket(hostName, port);
                 System.out.println("Client: socket connection established with server");
 
                 // start the threads
 
-                XMLStreamWriter writer = XMLStreamWriterFactory.create(socket.getOutputStream());
-
-
-                StreamMessage m = new StreamMessage(to, from);
-                try {
-                   // m.write(writer);
-                    //new StanzaMessage(to, from, "Nieuwbericht", "jo dit is een nieuw bericht jo", MessageType.CHAT).write(writer);
-                    StanzaFactory.buildMessage("falco", "jonathan", "chat", "mess", "dit is het onderwerp", "dit is de bdody").write(writer);
-
-                    //message.write(writer);
-                   // m.write(writer);
-                } catch (XMLStreamException e) {
-                    e.printStackTrace();
-                }
-
-
-                socket.close();
-
+                xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
+                // init message
+                StanzaFactory.Server.buildStream("server@server.com", u.getEmail());
 
             } catch (IOException e) {
                 System.out.println("Cannot connect to server");
@@ -85,9 +75,24 @@ public class TestClient {
             }
         }
 
+
+
+
+    public void write(Writable w) {
+
+        try {
+            w.write(xmlStreamWriter);
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+
     }
 
-
-
-
+    public void close(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

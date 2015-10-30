@@ -1,16 +1,19 @@
 package server;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
-import model.StanzaBuildException;
-import model.StanzaFactory;
-import model.XMPPMessage;
-import model.interfaces.Writable;
-import model.xml.XMLAttribute;
-import model.xml.XMLElement;
+import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
+import generic.Element;
+import generic.protocol.XMLProtocol;
+import interfaces.Writable;
+import generic.xml.XMLAttribute;
+import generic.xml.XMLElement;
+import model.User;
 import org.xml.sax.InputSource;
+import xmpp.ProtocolFactory;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,8 +26,27 @@ public class Connection implements Runnable{
 
 
 
-    private Socket socket;
+    XMLStreamReader xmlStreamReader;
+    XMLStreamWriter xmlStreamWriter;
 
+
+    ThreadPool threadPool;
+
+    public Connection(ThreadPool threadPool){
+
+        this.threadPool = threadPool;
+
+    }
+
+    private Socket socket;
+    private User user;
+
+
+    public boolean hasUser(User u) throws Exception{
+
+        if(user == null) throw new Exception("geen stream gestart, geen valide stream message ontvangen, sluit thread");
+        return user.equals(u);
+    }
 
     private ArrayList<Writable> reads = new ArrayList<>(), writes = new ArrayList<>();
 
@@ -41,8 +63,30 @@ public class Connection implements Runnable{
 
 
         try {
-            XMLStreamReader xmlStreamReader = XMLStreamReaderFactory.create(new InputSource(socket.getInputStream()), false);
+            xmlStreamReader = XMLStreamReaderFactory.create(new InputSource(socket.getInputStream()), false);
+            xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
             try {
+
+
+                XMLElement element = readStream(xmlStreamReader);
+
+                System.out.println(element);
+                XMLProtocol openStreamProtocol = ProtocolFactory.streamProtocol(true);
+
+
+                // als het eerste bericht geen stream open bericht is dan returnt deze
+                if(!openStreamProtocol.checkRecursive(element, openStreamProtocol)){
+                    return;
+                }else{
+                    String email = element.getAttributeAt(1).getValue();
+
+                    threadPool.addActiveUser(new User(email));
+
+                }
+                //TODO read stream message
+
+                xmlStreamReader.next();
+
                 while(xmlStreamReader.hasNext()){
 
 
@@ -51,14 +95,11 @@ public class Connection implements Runnable{
 
                         System.out.println(el.toString());
 
-                    try {
-                        XMPPMessage message = StanzaFactory.buildMessage(el);
-                        System.out.println("RECIEVED MESSAGE : "+ message.toString());
+
+//
 
 
-                    } catch (StanzaBuildException e) {
-                        e.printStackTrace();
-                    }
+
                     System.out.println("WELL");
 
 //
@@ -136,7 +177,7 @@ public class Connection implements Runnable{
                     element.addElement(readElement(streamReader, el));
 
                 } else if (streamReader.isCharacters()) {
-                    element.setText(streamReader.getText());
+                    element.setValue(streamReader.getText());
                 } else {
                     return element;
                 }
@@ -187,6 +228,25 @@ public class Connection implements Runnable{
             }
         return attributes;
 
+    }
+
+
+    public boolean write(Writable writable){
+
+
+        try {
+            writable.write(xmlStreamWriter);
+            return true;
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean broadcastMessage(XMLElement element, User u){
+
+        return threadPool.sendMessage(element, u);
     }
 
 

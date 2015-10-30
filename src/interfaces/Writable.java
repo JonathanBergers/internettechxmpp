@@ -1,4 +1,4 @@
-package model.interfaces;
+package interfaces;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
