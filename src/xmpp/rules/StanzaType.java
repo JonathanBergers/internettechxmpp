@@ -1,4 +1,4 @@
-package xmpp;
+package xmpp.rules;
 
 /**
  * Created by jonathan on 29-10-15.

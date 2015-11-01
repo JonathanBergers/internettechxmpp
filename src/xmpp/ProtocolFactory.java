@@ -1,8 +1,9 @@
 package xmpp;
 
-import generic.protocol.XMLProtocol;
+import generic.xml.XMLProtocol;
 import generic.xml.XMLAttribute;
 import generic.xml.XMLElement;
+import xmpp.rules.StanzaType;
 
 /**
  * Created by jonathan on 30-10-15.

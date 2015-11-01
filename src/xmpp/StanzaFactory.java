@@ -2,6 +2,7 @@ package xmpp;
 
 import generic.xml.XMLElement;
 import model.User;
+import xmpp.rules.StanzaType;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class StanzaFactory {
     private final static String QUERY_NAME ="q";
     private final static String STREAM_NAME ="stream";
 
-    private static XMLElement createRootStanzaElement(final String rootName, final String to, final String  from, final String type, final String id){
+    static XMLElement createRootStanzaElement(final String rootName, final String to, final String  from, final String type, final String id){
         XMLElement element = new XMLElement(rootName);
         element.addAttribute("to", to).addAttribute("from" , from).addAttribute("type", type).addAttribute("id", id);
         return element;

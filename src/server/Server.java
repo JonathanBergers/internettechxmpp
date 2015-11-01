@@ -1,17 +1,8 @@
 package server;
 
-import com.sun.xml.internal.stream.buffer.XMLStreamBuffer;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
-import org.xml.sax.InputSource;
-
-import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by jonathan on 12-10-15.
@@ -29,8 +20,8 @@ public class Server {
     }
 
     public Server(){
-        this.hostName = "localhost";
-        this.port = 8080;
+        this.hostName = ServerSettings.STANDARD_HOSTNAME;
+        this.port = ServerSettings.STANDARD_PORT;
     }
 
 

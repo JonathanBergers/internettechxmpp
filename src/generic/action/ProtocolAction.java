@@ -1,14 +1,15 @@
-package server;
+package generic.action;
 
 import generic.Element;
 import generic.protocol.Protocol;
-import generic.protocol.XMLProtocol;
-import generic.xml.XMLElement;
 
 /**
  * Created by jonathan on 30-10-15.
  *
  * when a element conforms a protocol , describe the action to do
+ *
+ * hiermee kunnen actiess gedefineerd worden die uitgevoerd moeten worden wanneer een element voldoet aan een bepaald protocol.
+ * bijvoorbeeld wanneer een bericht ingelezen is, en deze voldoet aan het message protocol, dan moet deze verstuurd worden naar de gebruiker.
  *
  */
 public abstract class ProtocolAction<T extends Element> {

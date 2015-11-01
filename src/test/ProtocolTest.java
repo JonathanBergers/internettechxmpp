@@ -4,9 +4,9 @@ import client.TestClient;
 import model.User;
 import server.Server;
 import xmpp.StanzaFactory;
-import xmpp.StanzaType;
+import xmpp.rules.StanzaType;
 import xmpp.ProtocolFactory;
-import generic.protocol.XMLProtocol;
+import generic.xml.XMLProtocol;
 import generic.xml.XMLElement;
 import org.junit.Test;
 

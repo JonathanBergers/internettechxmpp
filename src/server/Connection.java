@@ -2,8 +2,7 @@ package server;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
-import generic.Element;
-import generic.protocol.XMLProtocol;
+import generic.xml.XMLProtocol;
 import interfaces.Writable;
 import generic.xml.XMLAttribute;
 import generic.xml.XMLElement;

@@ -1,6 +1,6 @@
 package server;
 
-import generic.Element;
+import generic.action.ProtocolAction;
 import generic.xml.XMLElement;
 import model.User;
 import xmpp.ProtocolFactory;

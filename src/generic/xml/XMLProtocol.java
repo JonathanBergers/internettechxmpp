@@ -1,15 +1,19 @@
-package generic.protocol;
+package generic.xml;
 
 import generic.Element;
+import generic.protocol.Protocol;
 import interfaces.Nested;
-import generic.xml.XMLAttribute;
-import generic.xml.XMLElement;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by jonathan on 29-10-15.
+ *
+ * Met dit protocol kun je xmpp protocollen opbouwen.
+ * ook kun je nagaan of xml elementen voldoen aan dit protocol met de checkRecursive methode
+ *
+ *
  */
 public abstract class XMLProtocol<T extends Element> implements Nested<XMLProtocol>, Protocol<T> {
 
@@ -17,9 +21,6 @@ public abstract class XMLProtocol<T extends Element> implements Nested<XMLProtoc
     private XMLProtocol parent;
     protected LinkedList<Protocol<XMLAttribute>> attributes = new LinkedList<>();
 
-    public XMLProtocol(XMLProtocol parent) {
-        this.parent = parent;
-    }
 
     public XMLProtocol(){
         this.parent = null;

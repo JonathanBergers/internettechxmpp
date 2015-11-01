@@ -2,9 +2,8 @@ package test;
 
 import client.TestClient;
 import model.User;
-import server.Server;
 import xmpp.StanzaFactory;
-import xmpp.StanzaType;
+import xmpp.rules.StanzaType;
 
 /**
  * Created by jonathan on 30-10-15.
@@ -32,7 +31,7 @@ public class Test {
 
 
         client.write(StanzaFactory.Server.buildMessage(user1.getEmail(), user2.getEmail(), StanzaType.Message.CHAT, "jo", "KP", "jo"));
-
+        client1.write(StanzaFactory.Server.buildMessage(user1.getEmail(), user2.getEmail(), StanzaType.Message.CHAT, "jo", "KP", "jo"));
 //        try {
 //            Thread.sleep(100000);
 //        } catch (InterruptedException e) {
