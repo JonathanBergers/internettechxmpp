@@ -3,6 +3,10 @@ package client;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import interfaces.Writable;
 import model.User;
+import server.ServerSettings;
+import xmpp.rules.Authentication;
+import xmpp.rules.Message;
+import xmpp.rules.Registration;
 import xmpp.rules.Stream;
 
 import javax.xml.stream.XMLStreamException;
@@ -14,7 +18,7 @@ import java.net.Socket;
 /**
  * Created by jonathan on 30-10-15.
  */
-public class TestClient {
+public class TestClient extends Thread{
 
     private final String hostName;
     private final int port;
@@ -24,6 +28,13 @@ public class TestClient {
 
     XMLStreamReader xmlStreamReader;
     XMLStreamWriter xmlStreamWriter;
+
+
+    public static void main(String[] args) {
+        new TestClient(new User("jonathan")).start();
+        new TestClient(new User("falco")).start();
+    }
+
 
     public TestClient(String hostName, int port, User u) {
         this.hostName = hostName;
@@ -56,8 +67,9 @@ public class TestClient {
                 // start the threads
 
                 xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
-                // init message
-                Stream.stream(true, "model@model.com", u.getEmail());
+
+
+
 
             } catch (IOException e) {
                 System.out.println("Cannot connect to server");
@@ -65,23 +77,29 @@ public class TestClient {
             }
 
 
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+
+
+
+
         }
 
 
 
 
-    public void write(Writable w) {
+    public synchronized boolean write(Writable w) {
 
         try {
+
+            System.out.println("CLIENT SENT:" + w.toString());
             w.write(xmlStreamWriter);
+
+            return true;
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
+
+        return false;
 
     }
 

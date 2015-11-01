@@ -34,7 +34,7 @@ public class Server {
 
 
         threadPool = new ThreadPool(serverSettings);
-        threadPool.run();
+        threadPool.start();
 
 
         try {

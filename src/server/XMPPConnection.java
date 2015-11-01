@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by jonathan on 12-10-15.
  */
-public class XMPPConnection implements Runnable, Connection {
+public class XMPPConnection extends Thread implements Connection {
 
 
     XMLStreamReader xmlStreamReader;
@@ -55,17 +55,22 @@ public class XMPPConnection implements Runnable, Connection {
                 while (xmlStreamReader.hasNext()) {
 
 
+
                     XMLElement el = readStream(xmlStreamReader);
 
-                    if(el == null){
-                        return;
-                        //wanneer client klaar is met berichten sturen
+
+                    if(el != null){
+                        System.out.println(el.toString());
+                        actionHandler.handleMessage(el);
                     }
 
-                    System.out.println(el.toString());
-                    actionHandler.handleMessage(el);
+
 
                     xmlStreamReader.next();
+
+
+
+
 
 
 
@@ -208,7 +213,7 @@ public class XMPPConnection implements Runnable, Connection {
 
 
     @Override
-    public void writeResponse(Writable writable) {
+    public synchronized void writeResponse(Writable writable) {
 
         System.out.println("Writing: "+ writable.toString());
 

@@ -17,4 +17,11 @@ public class RegisteredUser extends User {
     public boolean authenticate(String password){
         return this.password.equals(password);
     }
+
+    @Override
+    public String toString() {
+        return "RegisteredUser{" +
+                "password='" + password + '\'' +
+                '}';
+    }
 }

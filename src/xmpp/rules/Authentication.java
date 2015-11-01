@@ -74,9 +74,11 @@ public interface Authentication {
 
         //TODO QUERY
 
+        XMLProtocol queryProtocol = root.addChildProtocol(XMPPProtocols.elementHasName(XMPPStanzas.NAME_QUERY));
+
         // moet ingevulde username hebben
-        root.addChildProtocol(XMPPProtocols.elementHasNameWithText("username", true));
-        root.addChildProtocol(XMPPProtocols.elementHasNameWithText("password", true));
+        queryProtocol.addChildProtocol(XMPPProtocols.elementHasNameWithText("email", true));
+        queryProtocol.addChildProtocol(XMPPProtocols.elementHasNameWithText("password", true));
 
         return root;
 
@@ -112,9 +114,9 @@ public interface Authentication {
 
 
 
-        static XMLElement login(final String to, final String from, final String email, final String password){
+        public static XMLElement login(final String to, final String from, final String email, final String password){
 
-            XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, from, StanzaType.Query.GET, CLIENT_ID_SEND_LOGIN_FIELDS_FILLED);
+            XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, from, StanzaType.Query.SET, CLIENT_ID_SEND_LOGIN_FIELDS_FILLED);
             XMLElement queryElement = element.addElement(XMPPStanzas.NAME_QUERY);
 
             queryElement.addElement("email", email);

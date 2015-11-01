@@ -79,6 +79,8 @@ public class AuthenticationActions  extends XMPPAction {
                     return false;
                 }
 
+
+                System.out.println("USER "+ user.toString() + "authenticated" );
                 connection.setActiveUser(user);
                 connection.writeResponse(Authentication.responseAuthentication(model.getServerSettings(), from));
                 return true;

@@ -56,7 +56,9 @@ public class ThreadPool extends Thread implements Model {
 
     public void addConnection(Socket socket){
         XMPPConnection connection = new XMPPConnection(this, socket);
-        connection.run();
+        connection.start();
+
+        //writeQuedMessages();
     }
 
     public void addActiveUser(XMPPConnection xmppConnection){

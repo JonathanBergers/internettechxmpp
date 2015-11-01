@@ -1,9 +1,13 @@
 package test;
 
 import client.TestClient;
+import model.RegisteredUser;
 import model.User;
 import server.Server;
+import server.ServerSettings;
+import xmpp.rules.Authentication;
 import xmpp.rules.Message;
+import xmpp.rules.Registration;
 import xmpp.rules.StanzaType;
 import generic.xml.XMLProtocol;
 import generic.xml.XMLElement;
@@ -36,20 +40,42 @@ public class ProtocolTest {
 
 
 
-    public static void testSendMessage(){
 
+    static String EMAIL1 = "user@user1.com", EMAIL2 = "user@user2.com";
 
-        Server s = new Server();
+    @Test
+    public void registerUser1(){
 
-
-        User user1 = new User("user@user1.com");
-        User user2 = new User("user@user2.com");
-
-        TestClient client = new TestClient(user1);
+        User user1 = new RegisteredUser(EMAIL1, "pass1");
         TestClient client1 = new TestClient(user1);
-
+        client1.start();
+        // registreer user 1
+        client1.write(Registration.Client.register(new ServerSettings().getXmppAddress(), user1.getEmail(), user1.getEmail(), "pass1"));
 
     }
+    @Test
+    public void registerUser2(){
+
+        User user1 = new RegisteredUser(EMAIL2, "pass1");
+        TestClient client1 = new TestClient(user1);
+        client1.run();
+        // registreer user 1
+        client1.write(Registration.Client.register(new ServerSettings().getXmppAddress(), user1.getEmail(), user1.getEmail(), "pass1"));
+
+    }
+    @Test
+    public void authenticateUser1(){
+        User user1 = new RegisteredUser(EMAIL1, "pass1");
+        TestClient client1 = new TestClient(user1);
+        client1.run();
+        client1.write(Authentication.Client.login(new ServerSettings().getXmppAddress(), user1.getEmail(), user1.getEmail(), "pass1"));
+    }
+
+
+
+
+
+
 
 
 }
