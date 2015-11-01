@@ -13,7 +13,7 @@ import generic.xml.XMLElement;
  * een stream kan volgens xmpp allerlij berichten en commands bevatten.
  * omdat elk element recursief wordt uitgelezen zou je pas acties kunnen uitvoeren wanneer een volledige stream is ingelezen.
  *
- * op dit moment kunnen er geen streams opgesteld worden tussen users alleen met server en user
+ * op dit moment kunnen er geen streams opgesteld worden tussen users alleen met model en user
  *
  *
  *

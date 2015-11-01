@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by jonathan on 1-11-15.
  * de protocollen van de berichten die verstuurd worden door de client voor het opvragen van contacten en toevoegen van contacten
- * de berichten die verstuurd kunnen worden door de server als antwoord
+ * de berichten die verstuurd kunnen worden door de model als antwoord
  *
  * gebruikers kunnen elkaar contact verzoeken doen, wanneer een gebruiker accepteerd dan wordt het contact toegevoegd
  */
@@ -74,7 +74,7 @@ public interface Contacts {
     static XMLProtocol requestAddContact(){
 
         XMLProtocol<XMLElement> root = XMPPProtocols.elementHasNameWithText(XMPPStanzas.NAME_COMMAND, false);
-        // bericht moet aan de server zijn
+        // bericht moet aan de model zijn
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("to"));
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("from"));
         // type moet een van de values van message type bevatten
@@ -103,6 +103,21 @@ public interface Contacts {
      */
     static XMLElement serverResponseAddContact(final String to, final ServerSettings serverSettings){
         XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, serverSettings.getXmppAddress(), StanzaType.Query.RESULT, SERVER_ID_RESPONSE_ADDCONTACT);
+        element.addElement(XMPPStanzas.NAME_QUERY);
+        return element;
+
+    }
+    /**bericht dat wordt verzonden op antwoord van contact toevoeg request
+     * wanneer bericht goed is aan gekomen en deze verstuurd is naar de gebruiker, of zal worden
+     *
+     * @param to
+     * @param serverSettings
+     * @return
+     */
+    static XMLElement serverResponseAddContact(final String to, final ServerSettings serverSettings, final XMLElement error, final XMLElement query){
+        XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, serverSettings.getXmppAddress(), StanzaType.Query.ERROR, SERVER_ID_RESPONSE_ADDCONTACT);
+        element.addElement(query);
+        element.addElement(error);
         return element;
 
     }
@@ -118,7 +133,7 @@ public interface Contacts {
     static XMLProtocol clientResponseAddContact(){
 
         XMLProtocol<XMLElement> root = XMPPProtocols.elementHasNameWithText(XMPPStanzas.NAME_COMMAND, false);
-        // bericht moet aan de server zijn
+        // bericht moet aan de model zijn
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("to"));
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("from"));
         // type moet een van de values van message type bevatten

@@ -19,13 +19,22 @@ public interface XMPPProtocols {
             }
         };
     }
+    public static XMLProtocol<XMLElement> elementHasNameAndNoChildren(final String name){
+        return new XMLProtocol<XMLElement>() {
+            @Override
+            public boolean conforms(XMLElement input) {
+
+                return input.hasName(name) && input.getChildren().size() == 0;
+            }
+        };
+    }
     // element protocols for xml
     static XMLProtocol<XMLElement> elementHasNameWithText(final String name, boolean b){
         return new XMLProtocol<XMLElement>() {
             @Override
             public boolean conforms(XMLElement input) {
 
-                System.out.println("INPUT" + input.toString());
+                //System.out.println("INPUT" + input.toString());
                 return input.withText() == b && input.hasName(name);
             }
         };

@@ -31,8 +31,9 @@ public abstract class Element {
     }
 
     public boolean hasValue(final String value){
-        if(name == null) return false;
-        return this.name.equals(name);
+        if(this.value == null) return false;
+
+        return this.value.equals(value);
     }
 
 }

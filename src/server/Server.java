@@ -9,26 +9,23 @@ import java.net.Socket;
  */
 public class Server {
 
-    private final String hostName;
-    private final int port;
+    private final ServerSettings serverSettings;
 
     private ThreadPool threadPool;
 
-    public Server(String hostName, int port) {
-        this.hostName = hostName;
-        this.port = port;
+    public Server(ServerSettings serverSettings) {
+        this.serverSettings = serverSettings;
+
     }
 
     public Server(){
-        this.hostName = ServerSettings.STANDARD_HOSTNAME;
-        this.port = ServerSettings.STANDARD_PORT;
+        serverSettings = new ServerSettings();
     }
 
 
 
-    // run the server
+    // run the model
     public static void main(String[] args) {
-
         new Server().run();
     }
 
@@ -36,18 +33,19 @@ public class Server {
     public void run(){
 
 
-        threadPool = new ThreadPool();
+        threadPool = new ThreadPool(serverSettings);
+        threadPool.run();
 
 
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("server socket initialized");
+            ServerSocket serverSocket = new ServerSocket(serverSettings.getPort());
+            System.out.println("model socket initialized");
 
             // wait for connection then add thread
             while(true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Client socket accepted");
-                threadPool.addConnection(new Connection(socket));
+                threadPool.addConnection(socket);
 
 
 

@@ -1,9 +1,12 @@
-package generic.action;
+package generic.protocol;
 
 import generic.Element;
 import generic.protocol.Protocol;
 
 /**
+ * Created by jonathan on 1-11-15.
+ *
+ /**
  * Created by jonathan on 30-10-15.
  *
  * when a element conforms a protocol , describe the action to do
@@ -12,16 +15,16 @@ import generic.protocol.Protocol;
  * bijvoorbeeld wanneer een bericht ingelezen is, en deze voldoet aan het message protocol, dan moet deze verstuurd worden naar de gebruiker.
  *
  */
-public abstract class ProtocolAction<T extends Element> {
+public abstract class ProtocolAction<E extends Element, P extends Protocol<E>> {
 
 
-    private final Protocol protocol;
+    protected final P protocol;
 
-    protected ProtocolAction(Protocol protocol) {
+    protected ProtocolAction(P protocol) {
         this.protocol = protocol;
     }
 
-    public boolean handle(T element){
+    public boolean handle(E element){
 
         if(protocol.conforms(element)){
             return onHandle(element);
@@ -30,11 +33,6 @@ public abstract class ProtocolAction<T extends Element> {
     }
 
 
-    public abstract boolean onHandle(T element);
-
-
-
-
-
+    public abstract boolean onHandle(E element);
 
 }

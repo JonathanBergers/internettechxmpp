@@ -73,7 +73,7 @@ public abstract class XMLProtocol<T extends Element> implements Nested<XMLProtoc
             return false;
         } else if(!checkAttributes(element, protocol)) {
 
-            System.out.println("ATTRIBUTE CHECK failed");
+            //System.out.println("ATTRIBUTE CHECK failed");
             return false;
         }else{
 

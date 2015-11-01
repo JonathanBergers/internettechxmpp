@@ -2,13 +2,13 @@ package server;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
-import generic.xml.XMLProtocol;
 import interfaces.Writable;
 import generic.xml.XMLAttribute;
 import generic.xml.XMLElement;
+import model.Connection;
+import model.RegisteredUser;
 import model.User;
 import org.xml.sax.InputSource;
-import xmpp.ProtocolFactory;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -21,36 +21,22 @@ import java.util.List;
 /**
  * Created by jonathan on 12-10-15.
  */
-public class Connection implements Runnable{
-
+public class XMPPConnection implements Runnable, Connection {
 
 
     XMLStreamReader xmlStreamReader;
     XMLStreamWriter xmlStreamWriter;
+    final ThreadPool threadPool;
+    XMPPActionHandler actionHandler;
 
 
-    ThreadPool threadPool;
 
-    public Connection(ThreadPool threadPool){
-
-        this.threadPool = threadPool;
-
-    }
-
-    private Socket socket;
+    private final Socket socket;
     private User user;
 
 
-    public boolean hasUser(User u) throws Exception{
-
-        if(user == null) throw new Exception("geen stream gestart, geen valide stream message ontvangen, sluit thread");
-        return user.equals(u);
-    }
-
-    private ArrayList<Writable> reads = new ArrayList<>(), writes = new ArrayList<>();
-
-
-    public Connection(Socket socket) {
+    public XMPPConnection(ThreadPool threadPool, Socket socket) {
+        this.threadPool = threadPool;
         this.socket = socket;
     }
 
@@ -58,55 +44,33 @@ public class Connection implements Runnable{
     public void run() {
 
 
-
-
-
         try {
             xmlStreamReader = XMLStreamReaderFactory.create(new InputSource(socket.getInputStream()), false);
             xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
+            actionHandler = new XMPPActionHandler(threadPool, this);
             try {
 
 
-                XMLElement element = readStream(xmlStreamReader);
 
-                System.out.println(element);
-                XMLProtocol openStreamProtocol = ProtocolFactory.streamProtocol(true);
+                while (xmlStreamReader.hasNext()) {
 
 
-                // als het eerste bericht geen stream open bericht is dan returnt deze
-                if(!openStreamProtocol.checkRecursive(element, openStreamProtocol)){
-                    return;
-                }else{
-                    String email = element.getAttributeAt(1).getValue();
+                    XMLElement el = readStream(xmlStreamReader);
 
-                    threadPool.addActiveUser(new User(email));
+                    if(el == null){
+                        return;
+                        //wanneer client klaar is met berichten sturen
+                    }
 
-                }
-                //TODO read stream message
+                    System.out.println(el.toString());
+                    actionHandler.handleMessage(el);
 
-                xmlStreamReader.next();
-
-                while(xmlStreamReader.hasNext()){
-
-
-                        XMLElement el =
-                        readStream(xmlStreamReader);
-
-                        System.out.println(el.toString());
-
-
-//
-
-
-
-                    System.out.println("WELL");
-
-//
                     xmlStreamReader.next();
 
 
-                    }
 
+
+                }
 
 
             } catch (XMLStreamException e) {
@@ -122,7 +86,6 @@ public class Connection implements Runnable{
     }
 
 
-
     private XMLElement readStream(XMLStreamReader streamReader) throws XMLStreamException {
 
         XMLElement el = null;
@@ -135,7 +98,7 @@ public class Connection implements Runnable{
 //                el = new XMLElement(streamReader.getLocalName());
                 el = new XMLElement(localName);
 
-                System.out.println("ELEMENT READ" + el.toString());
+                //System.out.println("ELEMENT READ" + el.toString());
                 el.addAttributes(checkAttributes(streamReader));
                 return readElement(streamReader, el);
 
@@ -153,6 +116,7 @@ public class Connection implements Runnable{
     /**
      * Reads xml from the stream and builds elements
      * recursive
+     *
      * @param streamReader
      * @param element
      * @return
@@ -165,9 +129,7 @@ public class Connection implements Runnable{
                 streamReader.next();
 
 
-
                 if (streamReader.isStartElement()) {
-
 
 
                     // recursion
@@ -194,60 +156,66 @@ public class Connection implements Runnable{
     }
 
 
-
-
-
-
-    private List<XMLAttribute> checkAttributes(XMLStreamReader reader){
+    private List<XMLAttribute> checkAttributes(XMLStreamReader reader) {
 
 
         List<XMLAttribute> attributes = new ArrayList<>();
         int attrCount = reader.getAttributeCount();
 
-            System.out.println("Attribute count : "+ attrCount);
+        //System.out.println("Attribute count : " + attrCount);
 
-            if (attrCount > 0) {
+        if (attrCount > 0) {
 
-                // voeg attributen toe
-                for (int i = 0; i < attrCount; i++) {
+            // voeg attributen toe
+            for (int i = 0; i < attrCount; i++) {
 
-                    String attrName = reader.getAttributeName(i).getLocalPart();
-                    String attrValue = reader.getAttributeValue(i);
+                String attrName = reader.getAttributeName(i).getLocalPart();
+                String attrValue = reader.getAttributeValue(i);
 
-                    XMLAttribute attribute = new XMLAttribute(attrName, attrValue);
-                    System.out.println("Attribute: " + attrName + " " + attrValue);
-                    System.out.println(attribute.toString());
+                XMLAttribute attribute = new XMLAttribute(attrName, attrValue);
+                //System.out.println("Attribute: " + attrName + " " + attrValue);
+               // System.out.println(attribute.toString());
 
-                    attributes.add(attribute);
+                attributes.add(attribute);
 
-
-
-                }
 
             }
+
+        }
         return attributes;
 
     }
 
 
-    public boolean write(Writable writable){
 
+
+    /**Wanneer een gebruiker geauthenticeerd of registered is dan wordt deze toegevoegd aan de connectie
+     * Ook wordt de handler geinformeerd dat de gebruiker geauthenticeerd is
+     *
+     * @param user
+     */
+    @Override
+    public void setActiveUser(RegisteredUser user) {
+        this.user = user;
+        threadPool.addActiveUser(this);
+        actionHandler.setRegisteredUser(user);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+
+
+    @Override
+    public void writeResponse(Writable writable) {
+
+        System.out.println("Writing: "+ writable.toString());
 
         try {
             writable.write(xmlStreamWriter);
-            return true;
         } catch (XMLStreamException e) {
             e.printStackTrace();
-            return false;
         }
     }
-
-
-    public boolean broadcastMessage(XMLElement element, User u){
-
-        return threadPool.sendMessage(element, u);
-    }
-
-
-
 }

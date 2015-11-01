@@ -13,7 +13,8 @@ public class RegisteredUser extends User {
         this.password = password;
     }
 
-    public String getPassword() {
-        return password;
+
+    public boolean authenticate(String password){
+        return this.password.equals(password);
     }
 }

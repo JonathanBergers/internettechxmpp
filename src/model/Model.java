@@ -1,20 +1,43 @@
 package model;
 
-import java.util.ArrayList;
+import interfaces.Writable;
+import model.RegisteredUser;
+import model.User;
+import server.ServerSettings;
+
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
- * Created by jonathan on 12-10-15.
+ * Created by jonathan on 1-11-15.
  */
-public class Model {
+public interface Model {
+
+
+    ServerSettings getServerSettings();
+
+    RegisteredUser registerUser(final String email, final String password);
 
 
 
-    public volatile static List<User> users = new ArrayList<>();
+    /**Voegt contact toe aan contactenlijst van gebruiker.
+     *
+     * @param subjectEmail gebruiker email waaraan contact toegevoegd moet worden
+     * @param userEmail email vancontact
+     * @return true als het gelukt is, false als er een van beide contacten niet geregistreert is
+     */
+    boolean addContact(final String subjectEmail, final String userEmail);
+
+
+
+    RegisteredUser authenticateUser(final String email, final String password);
+
+
+
+    boolean hasUserWithEmail(final String email);
+
+    List<User> getContactList(final RegisteredUser user);
+
+    void writeTo(final String email, Writable writable);
 
 
 

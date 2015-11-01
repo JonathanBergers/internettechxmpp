@@ -1,12 +1,9 @@
 package client;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
-import generic.xml.XMLAttribute;
-import generic.xml.XMLElement;
 import interfaces.Writable;
 import model.User;
-import old.StreamMessage;
-import xmpp.StanzaFactory;
+import xmpp.rules.Stream;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -52,7 +49,7 @@ public class TestClient {
 
             try {
 
-                // connect to server
+                // connect to model
               socket = new Socket(hostName, port);
                 System.out.println("Client: socket connection established with server");
 
@@ -60,7 +57,7 @@ public class TestClient {
 
                 xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
                 // init message
-                StanzaFactory.Server.buildStream("server@server.com", u.getEmail());
+                Stream.stream(true, "model@model.com", u.getEmail());
 
             } catch (IOException e) {
                 System.out.println("Cannot connect to server");

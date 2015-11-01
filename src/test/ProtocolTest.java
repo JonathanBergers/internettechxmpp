@@ -3,9 +3,8 @@ package test;
 import client.TestClient;
 import model.User;
 import server.Server;
-import xmpp.StanzaFactory;
+import xmpp.rules.Message;
 import xmpp.rules.StanzaType;
-import xmpp.ProtocolFactory;
 import generic.xml.XMLProtocol;
 import generic.xml.XMLElement;
 import org.junit.Test;
@@ -22,11 +21,10 @@ public class ProtocolTest {
     @Test
     public void testMessage(){
         // maak message
-        XMLElement message = StanzaFactory.Server.buildMessage("falco", "jona", StanzaType.Message.CHAT, "idididi", "subjeeect", "bodeeyy");
+        XMLElement message = Message.messageElement("falco", "jona", StanzaType.Message.CHAT, "idididi", "subjeeect", "bodeeyy");
         System.out.println(message.toString());
-
         // maak protocol
-        XMLProtocol messageProtocol = ProtocolFactory.messageProtocol();
+        XMLProtocol messageProtocol = Message.messageProtocol();
 
         // kijk of bericht voldoet aan protocol
         boolean b = messageProtocol.checkRecursive(message, messageProtocol);
@@ -42,6 +40,7 @@ public class ProtocolTest {
 
 
         Server s = new Server();
+
 
         User user1 = new User("user@user1.com");
         User user2 = new User("user@user2.com");

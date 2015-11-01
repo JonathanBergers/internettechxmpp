@@ -27,10 +27,10 @@ public interface Registration {
      *
      * @return
      */
-    static XMLProtocol requestRegiserFields(final ServerSettings serverSettings){
+    static XMLProtocol requestRegistrationFields(final ServerSettings serverSettings){
 
         XMLProtocol<XMLElement> root = XMPPProtocols.elementHasNameWithText(XMPPStanzas.NAME_COMMAND, false);
-        // bericht aan server
+        // bericht aan model
         root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("to", serverSettings.getXmppAddress()));
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("from"));
         // type moet een van de values van message type bevatten
@@ -40,18 +40,18 @@ public interface Registration {
 
 
         // moet een query bevatten
-        root.addChildProtocol(XMPPProtocols.elementHasName(XMPPStanzas.NAME_QUERY));
+        root.addChildProtocol(XMPPProtocols.elementHasNameAndNoChildren(XMPPStanzas.NAME_QUERY));
 
         return root;
 
     }
 
 
-    /**Het bericht dat de server verstuurd als antwoord op het request registreer bericht van de client
+    /**Het bericht dat de model verstuurd als antwoord op het request registreer bericht van de client
      *
      * @return
      */
-    static XMLElement responseRegisterFields(final String to, final ServerSettings serverSettings){
+    static XMLElement responseRegistrationFields(final String to, final ServerSettings serverSettings){
 
         XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, serverSettings.getXmppAddress(), StanzaType.Query.RESULT, SERVER_ID_RETURN_REGISTER_FIELDS);
 
@@ -69,7 +69,7 @@ public interface Registration {
      *
      * @return
      */
-    static XMLProtocol requestRegister(final ServerSettings serverSettings){
+    static XMLProtocol requestRegistration(final ServerSettings serverSettings){
 
         XMLProtocol<XMLElement> root = XMPPProtocols.elementHasNameWithText(XMPPStanzas.NAME_COMMAND, false);
         root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("to", serverSettings.getXmppAddress()));
@@ -83,7 +83,7 @@ public interface Registration {
         // moet een query bevatten
         XMLProtocol queryProtocol = root.addChildProtocol(XMPPProtocols.elementHasName(XMPPStanzas.NAME_QUERY));
 
-        queryProtocol.addChildProtocol(XMPPProtocols.elementHasNameWithText("username", true));
+        queryProtocol.addChildProtocol(XMPPProtocols.elementHasNameWithText("email", true));
         queryProtocol.addChildProtocol(XMPPProtocols.elementHasNameWithText("password", true));
 
         return root;
@@ -95,7 +95,7 @@ public interface Registration {
      * @param to
      * @return
      */
-    static XMLElement responseRegister(final ServerSettings serverSettings, final String to){
+    static XMLElement responseRegistration(final ServerSettings serverSettings, final String to){
 
         XMLElement rootElement =  XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, serverSettings.getXmppAddress(), StanzaType.Query.RESULT, SERVER_ID_RETURN_REGISTER_RESPONSE);
 
@@ -110,7 +110,7 @@ public interface Registration {
      * @param to
      * @return
      */
-    static XMLElement responseRegister(final ServerSettings serverSettings, final String to, XMLElement error, XMLElement query){
+    static XMLElement responseRegistration(final ServerSettings serverSettings, final String to, XMLElement error, XMLElement query){
 
        XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, serverSettings.getXmppAddress(), StanzaType.Query.ERROR, SERVER_ID_RETURN_REGISTER_RESPONSE);
         element.addElement(query);
@@ -118,6 +118,24 @@ public interface Registration {
         return element;
 
     }
+
+    static class Client{
+
+
+
+        public static XMLElement register(final String to, final String from, final String email, final String password){
+
+            XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, from, StanzaType.Query.SET, CLIENT_ID_SEND_REGISTER_FIELDS_FILLED);
+            XMLElement queryElement = element.addElement(XMPPStanzas.NAME_QUERY);
+
+            queryElement.addElement("email", email);
+            queryElement.addElement("password", password);
+
+            return element;
+        }
+
+    }
+
 
 
 }

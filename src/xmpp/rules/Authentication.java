@@ -27,7 +27,7 @@ public interface Authentication {
     static XMLProtocol requestLoginFields(final ServerSettings serverSettings){
 
         XMLProtocol<XMLElement> root = XMPPProtocols.elementHasNameWithText(XMPPStanzas.NAME_COMMAND, false);
-        // bericht moet aan de server zijn
+        // bericht moet aan de model zijn
         root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("to", serverSettings.getXmppAddress()));
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("from"));
         // type moet een van de values van message type bevatten
@@ -35,15 +35,15 @@ public interface Authentication {
         root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("id", CLIENT_ID_REQ_LOGIN_FIELDS));
 
 
-        // moet een query bevatten met id registreren
-        root.addChildProtocol(XMPPProtocols.elementHasName(XMPPStanzas.NAME_QUERY));
+        // moet een lege query bevatten
+        root.addChildProtocol(XMPPProtocols.elementHasNameAndNoChildren(XMPPStanzas.NAME_QUERY));
 
         return root;
 
     }
 
 
-    /**Het bericht dat de server verstuurd als antwoord op het request login bericht van de client
+    /**Het bericht dat de model verstuurd als antwoord op het request login bericht van de client
      *
      * @return
      */
@@ -104,6 +104,24 @@ public interface Authentication {
         element.addElement(error);
         element.addElement(query);
         return element;
+
+    }
+
+
+    static class Client{
+
+
+
+        static XMLElement login(final String to, final String from, final String email, final String password){
+
+            XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_COMMAND, to, from, StanzaType.Query.GET, CLIENT_ID_SEND_LOGIN_FIELDS_FILLED);
+            XMLElement queryElement = element.addElement(XMPPStanzas.NAME_QUERY);
+
+            queryElement.addElement("email", email);
+            queryElement.addElement("password", password);
+
+            return element;
+        }
 
     }
 

@@ -1,10 +1,15 @@
 package xmpp.actions;
 
-import generic.action.ProtocolAction;
+import generic.xml.XMLProtocolAction;
 import generic.xml.XMLElement;
 import generic.xml.XMLProtocol;
-import xmpp.rules.Authentication;
+import model.Model;
+import model.RegisteredUser;
+import model.Connection;
+import xmpp.rules.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,56 +19,89 @@ import xmpp.rules.Authentication;
  *
  *
  */
-public abstract class AuthenticationActions {
+public class AuthenticationActions  extends XMPPAction {
 
 
-    private final int STANZA_INDEX_TO = 0;
-    private ServerActions server;
-
-
-
+    public AuthenticationActions(Model model, Connection connection) {
+        super(model, connection);
+    }
 
     /**De actie die uitgevoerd moet worden wanneer client om login velden vraagt
      *
      * @return
      */
-    ProtocolAction<XMLElement> requestLoginFields(){
-        XMLProtocol protocol = Authentication.requestLoginFields(server.getServerSettings());
+    XMLProtocolAction requestLoginFields(){
+        XMLProtocol protocol = Authentication.requestLoginFields(model.getServerSettings());
 
-        return new ProtocolAction<XMLElement>(protocol) {
+        return new XMLProtocolAction(protocol) {
             @Override
             public boolean onHandle(XMLElement element) {
-                String to = element.getAttributeAt(STANZA_INDEX_TO).getValue();
-                if(to == null){
+                String from = element.getAttributeAt(STANZA_INDEX_FROM).getValue();
+                if(from == null){
                     return false;
 
-                }else if(to.isEmpty()){
+                }else if(from.isEmpty()){
                     return false;
                 }
-                server.writeTo(to, Authentication.responseLoginFields(to, server.getServerSettings()));
+                connection.writeResponse(Authentication.responseLoginFields(from, model.getServerSettings()));
                 return true;
 
             }
         };
     }
 
-    ProtocolAction<XMLElement> requestAuthentication(){
+    /**actie wanneer client inlogt met gegevens
+     *
+     * @return
+     */
+    XMLProtocolAction requestAuthentication(){
 
-        XMLProtocol protocol = Authentication.requestAuthentication(server.getServerSettings());
+        XMLProtocol protocol = Authentication.requestAuthentication(model.getServerSettings());
 
-        return new ProtocolAction<XMLElement>(protocol) {
+        return new XMLProtocolAction(protocol) {
             @Override
             public boolean onHandle(XMLElement element) {
 
-                //TODO
-                return false;
+                String from = element.getAttributeAt(STANZA_INDEX_FROM).getValue();
+
+                XMLElement queryElement = element.getChildAt(0);
+
+
+                String email = queryElement.getChildAt(0).getValue();
+                String password = queryElement.getChildAt(1).getValue();
+
+                RegisteredUser user  = model.authenticateUser(email, password);
+
+
+
+                if(user == null){
+                    connection.writeResponse(Authentication.responseAuthentication(model.getServerSettings(), from, xmpp.rules.Error.invalidCredentials(), queryElement));
+                    return false;
+                }
+
+                connection.setActiveUser(user);
+                connection.writeResponse(Authentication.responseAuthentication(model.getServerSettings(), from));
+                return true;
+
+
+
+
+
             }
-        }
+        };
 
 
 
     }
 
 
+    @Override
+    protected List<XMLProtocolAction> getActionsAsList() {
 
+        List<XMLProtocolAction> actions = new ArrayList<>();
+        actions.add(requestLoginFields());
+        actions.add(requestAuthentication());
+        return actions;
+
+    }
 }

@@ -5,7 +5,7 @@ package server;
  */
 public class ServerSettings {
 
-    static final String STANDARD_XMPPADDRESS = "server@server.com";
+    static final String STANDARD_XMPPADDRESS = "model@model.com";
     static final String STANDARD_HOSTNAME = "localhost";
     static final int STANDARD_PORT = 8080;
 
@@ -33,6 +33,12 @@ public class ServerSettings {
 
     public ServerSettings(String xmppAddress) {
         this.xmppAddress = xmppAddress;
+        this.hostname = STANDARD_HOSTNAME;
+        this.port = STANDARD_PORT;
+    }
+
+    public ServerSettings(){
+        this.xmppAddress = STANDARD_XMPPADDRESS;
         this.hostname = STANDARD_HOSTNAME;
         this.port = STANDARD_PORT;
     }
