@@ -4,10 +4,8 @@ import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import interfaces.Writable;
 import model.User;
 import server.ServerSettings;
-import xmpp.rules.Authentication;
-import xmpp.rules.Message;
-import xmpp.rules.Registration;
-import xmpp.rules.Stream;
+import xmpp.actions.MessageActions;
+import xmpp.rules.*;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -69,6 +67,13 @@ public class TestClient extends Thread{
                 xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
 
 
+                try {
+                    Message.messageElement("jo", " jo", " jo", " id", " niks", " niks" ).write(xmlStreamWriter);
+
+
+                } catch (XMLStreamException e) {
+                    e.printStackTrace();
+                }
 
 
             } catch (IOException e) {

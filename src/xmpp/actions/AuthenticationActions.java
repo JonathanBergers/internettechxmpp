@@ -97,12 +97,33 @@ public class AuthenticationActions  extends XMPPAction {
     }
 
 
+    /**De actie die uitgevoerd STREAM
+     *
+     * @return
+     */
+    XMLProtocolAction requestStream(){
+        XMLProtocol protocol = Stream.stream(true);
+
+        return new XMLProtocolAction(protocol) {
+            @Override
+            public boolean onHandle(XMLElement element) {
+
+
+                connection.writeResponse(Stream.stream(true, element.getAttributeAt(1).getValue(), "jonathan@" + element.getAttributeAt(1).getValue() ));
+                return true;
+
+            }
+        };
+    }
+
+
     @Override
     protected List<XMLProtocolAction> getActionsAsList() {
 
         List<XMLProtocolAction> actions = new ArrayList<>();
         actions.add(requestLoginFields());
         actions.add(requestAuthentication());
+        actions.add(requestStream());
         return actions;
 
     }

@@ -55,8 +55,7 @@ public abstract class XMLProtocol<T extends Element> implements Nested<XMLProtoc
     }
 
 
-    @Override
-    public abstract boolean conforms(T input);
+
 
 
     /**checks recursive if the element conforms the protocol.
@@ -84,19 +83,22 @@ public abstract class XMLProtocol<T extends Element> implements Nested<XMLProtoc
             int elSize = elementChildren.size();
             int proSize = childProtocols.size();
 
-            // aantal elementen komt niet overeen
-            if (elSize != proSize) {
-                System.out.println("Size of elements doesnt match");
-                System.out.println("element size = : " + elSize);
-                System.out.println("protocol el size = : " + proSize);
-                return false;
-            }
+//            // aantal elementen komt niet overeen
+//            if (elSize != proSize) {
+//                System.out.println("Size of elements doesnt match");
+//                System.out.println("element size = : " + elSize);
+//                System.out.println("protocol el size = : " + proSize);
+//                return false;
+//            }
 
             for (int i = 0; i < elSize; i++) {
 
                 XMLElement elmt = elementChildren.get(i);
                 XMLProtocol prot = childProtocols.get(i);
 
+                if(elmt == null || prot == null){
+                    break;
+                }
                 boolean b = prot.checkRecursive(elmt, prot, startBoolean);
 
                 if (!b) {

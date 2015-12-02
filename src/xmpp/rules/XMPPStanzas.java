@@ -16,6 +16,7 @@ public interface XMPPStanzas {
 
     static XMLElement createRootStanzaElement(final String rootName, final String to, final String  from, final String type, final String id){
         XMLElement element = new XMLElement(rootName);
+        element.addAttribute("xmlns", "jabber:client");
         element.addAttribute("to", to).addAttribute("from" , from).addAttribute("type", type).addAttribute("id", id);
         return element;
     }

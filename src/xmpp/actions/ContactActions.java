@@ -1,5 +1,7 @@
 package xmpp.actions;
 
+import generic.Element;
+import generic.protocol.Protocol;
 import generic.xml.XMLProtocolAction;
 import generic.xml.XMLElement;
 import generic.xml.XMLProtocol;
@@ -11,6 +13,7 @@ import xmpp.rules.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by jonathan on 1-11-15.
@@ -122,6 +125,9 @@ public class ContactActions extends AuthenticatedXMPPAction {
 
     @Override
     protected List<XMLProtocolAction> getActionsAsList() {
+
+
+
 
         List<XMLProtocolAction> actions = new ArrayList<>();
         actions.add(addContact());

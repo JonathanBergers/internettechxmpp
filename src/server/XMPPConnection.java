@@ -48,9 +48,16 @@ public class XMPPConnection extends Thread implements Connection {
             xmlStreamReader = XMLStreamReaderFactory.create(new InputSource(socket.getInputStream()), false);
             xmlStreamWriter = XMLStreamWriterFactory.create(socket.getOutputStream());
             actionHandler = new XMPPActionHandler(threadPool, this);
+
+
+
             try {
 
 
+                XMLElement el1 = readStream(xmlStreamReader);
+                xmlStreamWriter.writeStartDocument();
+                actionHandler.handleMessage(el1);
+                System.out.println(" Jooo " + el1);
 
                 while (xmlStreamReader.hasNext()) {
 
@@ -60,7 +67,7 @@ public class XMPPConnection extends Thread implements Connection {
 
 
                     if(el != null){
-                        System.out.println(el.toString());
+                        System.out.println("message recieved : "  + el.toString());
                         actionHandler.handleMessage(el);
                     }
 
@@ -95,16 +102,22 @@ public class XMPPConnection extends Thread implements Connection {
 
         XMLElement el = null;
         try {
+            if(!streamReader.hasNext()){
+                return el;
+            }
             streamReader.next();
             if (streamReader.isStartElement()) {
 
                 // recursion
                 String localName = streamReader.getLocalName();
+
 //                el = new XMLElement(streamReader.getLocalName());
                 el = new XMLElement(localName);
 
-                //System.out.println("ELEMENT READ" + el.toString());
+
                 el.addAttributes(checkAttributes(streamReader));
+
+                System.out.println(el);
                 return readElement(streamReader, el);
 
             }
@@ -128,13 +141,17 @@ public class XMPPConnection extends Thread implements Connection {
      */
     private XMLElement readElement(XMLStreamReader streamReader, XMLElement element) throws XMLStreamException {
 
+        if(element.hasName("stream")) return element;
+
         while (streamReader.hasNext()) {
             try {
+
 
                 streamReader.next();
 
 
                 if (streamReader.isStartElement()) {
+
 
 
                     // recursion

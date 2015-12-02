@@ -8,6 +8,6 @@ import generic.Element;
 public interface Protocol<T extends Element> {
 
 
-    public boolean conforms(T input);
+    boolean conforms(T input);
 
 }

@@ -61,6 +61,7 @@ public interface XMPPProtocols {
         };
     }
     static XMLProtocol<XMLAttribute> attributeHasNameValue(final String name, final String[] values){
+
         return new XMLProtocol<XMLAttribute>() {
             @Override
             public boolean conforms(XMLAttribute input) {

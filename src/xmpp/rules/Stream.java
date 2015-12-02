@@ -32,14 +32,15 @@ public interface Stream {
 
         XMLProtocol<XMLElement> root = XMPPProtocols.elementHasNameWithText(XMPPStanzas.NAME_STREAM, false);
 
+        root.addAttributeProtocol(XMPPProtocols.attributeHasName("version"));
         root.addAttributeProtocol(XMPPProtocols.attributeHasName("to"));
-        root.addAttributeProtocol(XMPPProtocols.attributeHasName("from"));
-
+        //root.addAttributeProtocol(XMPPProtocols.attributeHasName("from"));
+        root.addAttributeProtocol(XMPPProtocols.attributeHasName("lang"));
         // type moet een van de values van message type bevatten
-        if(open)root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("type", StanzaType.Stream.OPEN));
-        else root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("type", StanzaType.Stream.CLOSE));
+//        if(open)root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("type", StanzaType.Stream.OPEN));
+//        else root.addAttributeProtocol(XMPPProtocols.attributeHasNameValue("type", StanzaType.Stream.CLOSE));
 
-        root.addAttributeProtocol(XMPPProtocols.attributeHasName("id"));
+        //root.addAttributeProtocol(XMPPProtocols.attributeHasName("id"));
 
         return root;
 
@@ -57,7 +58,12 @@ public interface Stream {
         String type;
         if(open) type = StanzaType.Stream.OPEN; else type = StanzaType.Stream.CLOSE;
 
-        return XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_STREAM, to, from, type, "closeStream");
+        XMLElement element = XMPPStanzas.createRootStanzaElement(XMPPStanzas.NAME_STREAM +":stream", to, "exaple.com", type, "closeStream");
+        element.addAttribute("xmlns:stream", "http://etherx.jabber.org/streams");
+
+        return element;
+
+
     }
 
 
